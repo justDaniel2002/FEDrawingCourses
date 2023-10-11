@@ -64,9 +64,9 @@ const names = [
     }
 ];
 
-const NamesList = () => {
+const Tool = () => {
 
-    const [selectedButton, setSelectedButton] = useState<'Paints' | 'Drawing' | 'Brushes' | 'Mediums, Gels, Gessos, Vanishes & Cleaners' | 'Packs and Sets' | 'Books & Accessories' | 'Easels' | 'all' | null>('Paints');
+    const [selectedButton, setSelectedButton] = useState('Paints');
 
     const Paint = names.filter((name) => name.category === 'Paints');
     const Drawing = names.filter((name) => name.category === 'Drawing');
@@ -189,7 +189,7 @@ const NamesList = () => {
     );
 }
 
-export default NamesList;
+export default Tool;
 
 
 

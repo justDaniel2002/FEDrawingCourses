@@ -5,9 +5,7 @@ import React from "react";
 import Drawer from "./Drawer";
 import Drawerdata from "./Drawerdata";
 import Contactus from "./Contactus";
-import { Link, redirect } from "react-router-dom";
-import { useRouter } from "next/navigation";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 // interface NavigationItem {
 //   name: string;
@@ -32,9 +30,7 @@ const Navbar = () => {
 
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const router = useRouter();
-
-  const { data : session } = useSession();
+  const navigate = useNavigate();
 
   return (
     <Disclosure as="nav" className="bg-lightpink navbar">
@@ -80,18 +76,18 @@ const Navbar = () => {
                   <div style={{ paddingLeft: '10rem' }}>
                     {/* SIGNIN DIALOG */}
                     <div className="hidden md:block">
-                      {session?.user ? (
+                      {/* {session?.user ? (
                         <>
                           <p className="text-sky-600"> {session.user.name}</p>
-                          <button className="text-red-500" onClick={() => signOut()}>
+                          <button className="text-red-500" onClick={() => {}}>
                             Sign Out
                           </button>
                         </>
-                      ) : (
-                        <button className="bg-purple hover:bg-purple hover:text-white text-white text-15px font-medium ml-8 py-4 px-5 rounded" onClick={() => signIn()}>
+                      ) : ( */}
+                        <button className="bg-purple hover:bg-purple hover:text-white text-white text-15px font-medium ml-8 py-4 px-5 rounded" onClick={() => {navigate("/auth/login")}}>
                           Sign In
                         </button>
-                      )}
+                      {/* )} */}
                     </div>
 
                   </div>

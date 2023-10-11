@@ -1,6 +1,5 @@
 import Navbar from './Navbar';
 import React, { useEffect } from 'react';
-import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Navbarin = () => {
     useEffect(() => {

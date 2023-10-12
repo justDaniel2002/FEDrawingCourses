@@ -67,7 +67,7 @@ const names = [
 
 const ToolDialog = () => {
 
-    const [selectedButton, setSelectedButton] = useState<'All Tools'| 'Paints' | 'Drawing' | 'Brushes' | 'Mediums, Gels, Gessos, Vanishes & Cleaners' | 'Packs and Sets' | 'Books & Accessories' | 'Easels' | 'all' | null>('All Tools');
+    const [selectedButton, setSelectedButton] = useState('All Tools');
 
     const Paint = names.filter((name) => name.category === 'Paints');
     const Drawing = names.filter((name) => name.category === 'Drawing');

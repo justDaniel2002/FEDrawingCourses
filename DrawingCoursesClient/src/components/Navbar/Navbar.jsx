@@ -6,6 +6,8 @@ import Drawer from "./Drawer";
 import Drawerdata from "./Drawerdata";
 import Contactus from "./Contactus";
 import { Link, redirect, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { accountState } from "../../atom/accountState";
 
 // interface NavigationItem {
 //   name: string;
@@ -29,6 +31,8 @@ function classNames(...classes) {
 const Navbar = () => {
 
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const [account, setAccount] = useRecoilState(accountState)
 
   const navigate = useNavigate();
 
@@ -76,18 +80,21 @@ const Navbar = () => {
                   <div style={{ paddingLeft: '10rem' }}>
                     {/* SIGNIN DIALOG */}
                     <div className="hidden md:block">
-                      {/* {session?.user ? (
+                      {account?.sub? (
                         <>
-                          <p className="text-sky-600"> {session.user.name}</p>
-                          <button className="text-red-500" onClick={() => {}}>
+                          <p className="text-sky-600"> {account?.sub}</p>
+                          <button className="text-red-500" onClick={() => {
+                            setAccount(undefined);
+                            navigate("/auth/login");
+                          }}>
                             Sign Out
                           </button>
                         </>
-                      ) : ( */}
+                      ) : (
                         <button className="bg-purple hover:bg-purple hover:text-white text-white text-15px font-medium ml-8 py-4 px-5 rounded" onClick={() => {navigate("/auth/login")}}>
                           Sign In
                         </button>
-                      {/* )} */}
+                      )}
                     </div>
 
                   </div>

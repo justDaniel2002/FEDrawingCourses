@@ -12,7 +12,8 @@ const LoginPage = () => {
   const navigae = useNavigate();
 
   useEffect(() => {
-    if (data?.username != undefined) {
+    console.log(data)
+    if (data?.sub != undefined) {
       setAccount(data);
       if (data.role === "ROLE_ADMIN") {
         navigae("/admin");

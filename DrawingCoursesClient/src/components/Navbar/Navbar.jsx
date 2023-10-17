@@ -77,6 +77,14 @@ const Navbar = () => {
                     </Link>
                   ))}
                   <Contactus />
+                  <Link
+                      to={"MyCourses"}
+                      className="hover:text-purple px-3 py-4 text-15px font-medium space-links"
+                      aria-current= "page"
+                    >
+                      MyCourses
+                    </Link>
+
                   <div style={{ paddingLeft: '10rem' }}>
                     {/* SIGNIN DIALOG */}
                     <div className="hidden md:block">

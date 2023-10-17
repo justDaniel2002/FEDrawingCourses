@@ -3,6 +3,9 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import SearchCourses from './SearchCourse';
 import { GlobeAltIcon, DevicePhoneMobileIcon, CircleStackIcon, CloudIcon } from '@heroicons/react/24/outline';
+import { Link } from "react-router-dom";
+import { coursesData } from "../../data/data";
+import { api } from "../../api/api";
 
 // interface Name {
 //     course: string;
@@ -12,136 +15,31 @@ import { GlobeAltIcon, DevicePhoneMobileIcon, CircleStackIcon, CloudIcon } from 
 //     category: 'All Courses'|'Elementary Courses' | 'Beginner Courses' | 'Intermediate Courses' | 'Upper-intermediate Courses';
 // }
 
-const names = [
-    {
-        course: 'Vẽ phông cảnh',
-        imageSrc: '/assets/courses/coursesOne.svg',
-        profession: 'Vẽ cây thông',
-        price: '40',
-        category: 'Beginner Courses'
-    },
-    {
-        course: 'Vẽ vật thể',
-        imageSrc: '/assets/courses/coursesTwo.svg',
-        profession: 'Vẽ con trym',
-        price: '21',
-        category: 'Beginner Courses'
-    },
-    {
-        course: 'Vẽ tranh tĩnh vật',
-        imageSrc: '/assets/courses/coursesThree.svg',
-        profession: 'Vẽ quả táo',
-        price: '21',
-        category: 'Beginner Courses'
-    },
-    {
-        course: 'Vẽ tranh tường',
-        imageSrc: '/assets/courses/coursesFour.svg',
-        profession: 'Vẽ đàn cò trên cánh đồng',
-        price: '99',
-        category: 'Beginner Courses'
-    },
-    {
-        course: 'Vẽ tranh trừu tượng',
-        imageSrc: '/assets/courses/coursesOne.svg',
-        profession: 'Học cách tìm cảm hứng',
-        price: '89',
-        category: 'Elementary Courses'
-    },
-    {
-        course: 'Vẽ tranh minh họa',
-        imageSrc: '/assets/courses/coursesThree.svg',
-        profession: 'Vẽ tờ báo',
-        price: '89',
-        category: 'Elementary Courses'
-    },
-    {
-        course: 'Vẽ tranh phong cảnh',
-        imageSrc: '/assets/courses/coursesFour.svg',
-        profession: 'Vẽ thành phố',
-        price: '69',
-        category: 'Elementary Courses'
-    },
-    {
-        course: 'Vẽ tranh mosaic',
-        imageSrc: '/assets/courses/coursesTwo.svg',
-        profession: 'Vẽ tranh cô gái bằng mảnh vỡ kính',
-        price: '69',
-        category: 'Elementary Courses'
-    },
-    {
-        course: 'Vẽ tranh khắc',
-        imageSrc: '/assets/courses/coursesTwo.svg',
-        profession: 'Tạo hình người phụ nữ',
-        price: '99',
-        category: 'Intermediate Courses'
-    },
-    {
-        course: 'Vẽ tranh trừu tượng',
-        imageSrc: '/assets/courses/coursesFour.svg',
-        profession: 'Học cách phối màu',
-        price: '99',
-        category: 'Intermediate Courses'
-    },
-    {
-        course: 'Vẽ tranh minh họa',
-        imageSrc: '/assets/courses/coursesOne.svg',
-        profession: 'Vẽ một cuốn sách',
-        price: '99',
-        category: 'Intermediate Courses'
-    },
-    {
-        course: 'Vẽ tranh chân dung',
-        imageSrc: '/assets/courses/coursesThree.svg',
-        profession: 'Vẽ lại nàng monali Huấn',
-        price: '89',
-        category: 'Intermediate Courses'
-    },
-    {
-        course: 'Vẽ tranh mosaic',
-        imageSrc: '/assets/courses/coursesThree.svg',
-        profession: 'Vẽ trang bằng gốm',
-        price: '21',
-        category: 'Upper-intermediate Courses'
-    },
-    {
-        course: 'Vẽ tranh tĩnh vật',
-        imageSrc: '/assets/courses/coursesFour.svg',
-        profession: 'Vẽ cái ghế và bàn',
-        price: '29',
-        category: 'Upper-intermediate Courses'
-    },
-    {
-        course: 'Vẽ tranh trừu tượng',
-        imageSrc: '/assets/courses/coursesOne.svg',
-        profession: 'Học cách bảo dưỡng',
-        price: '99',
-        category: 'Upper-intermediate Courses'
-    },
-    {
-        course: 'Vẽ tranh khắc',
-        imageSrc: '/assets/courses/coursesTwo.svg',
-        profession: 'Học cách vẽ trên kim loại',
-        price: '58',
-        category: 'Upper-intermediate Courses'
-    }
-];
+
 
 const Coursesdialog = () => {
 
-    const [selectedButton, setSelectedButton] = useState('All Courses');
-    const ElementaryCourses = names.filter((name) => name.category === 'Elementary Courses');
-    const BeginnerCourses = names.filter((name) => name.category === 'Beginner Courses');
-    const IntermediateCourses = names.filter((name) => name.category === 'Intermediate Courses');
-    const UpperIntermediateCourses = names.filter((name) => name.category === 'Upper-intermediate Courses');
+    const [courses, setCourses] = useState([]);
+    const [selectedButton, setSelectedButton] = useState('Beginner Courses');
 
-    const AllCourses = [...ElementaryCourses, ...BeginnerCourses, ...IntermediateCourses, ...UpperIntermediateCourses];
+    const BeginnerCourses = courses.filter((course) => course.level === 'BEGINNER');
+    const IntermediateCourses = courses.filter((course) => course.level === 'INTERMEDIATE');
+    const UpperIntermediateCourses = courses.filter((course) => course.level === 'ADVANCED');
+
+    useEffect(() => {
+        const callBack = async () => {
+            const getCourses = await api.getCourses()
+            setCourses(getCourses)
+        }
+
+        callBack()
+    },[])
+
+    const AllCourses = [ ...BeginnerCourses, ...IntermediateCourses, ...UpperIntermediateCourses];
 
     let selectedNames = [];
     if (selectedButton === 'All Courses') {
         selectedNames = AllCourses;
-    } else if (selectedButton === 'Elementary Courses') {
-        selectedNames = ElementaryCourses;
     } else if (selectedButton === 'Beginner Courses') {
         selectedNames = BeginnerCourses;
     } else if (selectedButton === 'Intermediate Courses') {
@@ -153,25 +51,25 @@ const Coursesdialog = () => {
 
     const nameElements = selectedNames.map((name, index) => (
 
-        <div key={index}>
+        <Link to={`/Course/${name.id}`} className="block" key={index}>
             <div className=" text-lg sm:text-sm py-5 lg:py-0">
                 <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                     <img
-                        src={name.imageSrc}
-                        alt={name.imageSrc}
+                        src={`../${name.img}`}
+                        alt={name.title}
                         className="h-full w-full object-cover object-center"
                     />
                 </div>
                 <div className='flex justify-between'>
-                    <div className="mt-6 block font-normal text-gray-900">
-                        {name.course}
+                    <div className="mt-6 block font-normal text-gray-900 truncate">
+                        {name.title}
                     </div>
-                    <div className="mt-6 block text-lg font-semibold text-green border-solid border-2 border-green rounded-md px-1">
+                    <div className="mt-6 block text-lg font-semibold text-green border-solid border-2 border-green rounded-md px-1 truncate">
                         ${name.price}
                     </div>
                 </div>
-                <p aria-hidden="true" className="mt-2 mb-5 text-2xl font-semibold ">
-                    {name.profession}
+                <p aria-hidden="true" className="mt-2 mb-5 text-2xl font-semibold truncate">
+                    {name.description}
                 </p>
 
                 <div className='flex justify-between border-solid border-2 border-grey500 rounded-md p-2'>
@@ -183,13 +81,13 @@ const Coursesdialog = () => {
                         </div>
                         <div className='flex'>
                             <img src={'/assets/courses/Star.svg'} alt="star" />
-                            <p className='ml-1'>4.5</p>
+                            <p className='ml-1'>{name.rating}</p>
                         </div>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </Link>
     ));
 
     return (
@@ -210,9 +108,9 @@ const Coursesdialog = () => {
                     {/* FOR DESKTOP VIEW */}
                     <button onClick={() => setSelectedButton('All Courses')} className={"bg-white " + (selectedButton === 'All Courses' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"} style={{textAlign: 'left'}}>All Courses</button>
                     <button onClick={() => setSelectedButton('Beginner Courses')} className={"bg-white " + (selectedButton === 'Beginner Courses' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"} style={{textAlign: 'left'}}>Beginner Courses</button>
-                    <button onClick={() => setSelectedButton('Elementary Courses')} className={"bg-white " + (selectedButton === 'Elementary Courses' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"} style={{textAlign: 'left'}}>Elementary Courses</button>
+                    {/* <button onClick={() => setSelectedButton('Elementary Courses')} className={"bg-white " + (selectedButton === 'Elementary Courses' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"} style={{textAlign: 'left'}}>Elementary Courses</button> */}
                     <button onClick={() => setSelectedButton('Intermediate Courses')} className={"bg-white " + (selectedButton === 'Intermediate Courses' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"} style={{textAlign: 'left'}}>Intermediate Courses</button>
-                    <button onClick={() => setSelectedButton('Upper-intermediate Courses')} className={"bg-white " + (selectedButton === 'Upper-intermediate Courses' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"} style={{textAlign: 'left'}}>Upper-intermediate Courses</button>
+                    <button onClick={() => setSelectedButton('Upper-intermediate Courses')} className={"bg-white " + (selectedButton === 'Upper-intermediate Courses' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"} style={{textAlign: 'left'}}>Advanced Courses</button>
 
                     {/* FOR MOBILE VIEW */}
                     <GlobeAltIcon onClick={() => setSelectedButton('Beginner Courses')} width={70} height={70} className={"bg-white " + (selectedButton === 'Beginner Courses' ? 'border-b-2 border-orange fill-orange' : '') + " pb-2 block sm:hidden"} />

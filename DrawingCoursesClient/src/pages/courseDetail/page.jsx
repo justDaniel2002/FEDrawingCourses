@@ -3,7 +3,7 @@ import CourseDetail from "./CourseDetail";
 
 export default function CoursesDetail() {
   return (
-    <main> 
+    <main className="my-40"> 
       <CourseDetail />
     </main>
   )

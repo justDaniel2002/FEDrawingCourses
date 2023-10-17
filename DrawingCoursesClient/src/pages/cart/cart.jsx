@@ -1,0 +1,154 @@
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import { useRecoilState } from "recoil";
+import { courseCartState, toolCartState } from "../../atom/accountState";
+
+const columns = [
+  { id: "Title", label: "Title", minWidth: 170 },
+  { id: "Type", label: "Type", minWidth: 100 },
+  {
+    id: "Category",
+    label: "Category",
+    minWidth: 170,
+    align: "right",
+  },
+  {
+    id: "Price",
+    label: "Size\u00a0($)",
+    minWidth: 170,
+    align: "right",
+    format: (value) => value + " $",
+  },
+  {
+    id: "Quantity",
+    label: "Quantity",
+    minWidth: 170,
+    align: "right",
+  },
+];
+
+function createData(toolCart, courseCart) {
+  const dbTool = toolCart.map((cart) => {
+    const tool = cart.tool;
+    return {Title: tool.tool+" (tool)", Type: tool.type, Category: tool.category, Price: tool.price, Quantity: cart.quantity}
+  });
+
+  const dbCourse = courseCart.map((cart) => {
+    const course = cart.course;
+    return {Title: course.course+" (course)", Type: course.profession, Category: course.category, Price: course.price, Quantity: cart.quantity}
+  });
+  return [
+    ...dbTool,
+    ...dbCourse
+  ];
+}
+
+function total (db){
+  console.log(db)
+  const total = db.reduce((accumulator, currentValue) => accumulator + Number.parseInt(currentValue.Price), 0);
+  return total
+}
+
+const Cart = () => {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const [toolCart, setToolCart] = useRecoilState(toolCartState);
+  const [courseCart, setCourseCart] = useRecoilState(courseCartState);
+
+  const rows = createData(toolCart, courseCart)
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  return (
+    <main className="mb-40">
+      <div className="px-40 pb-40">
+        <div className="text-3xl font-bold text-center my-20">Cart</div>
+        {toolCart.length === 0 && courseCart.length === 0 ? (
+          <div className="p-5 bg-orange border-t-2">
+            you havent order anything
+          </div>
+        ) : (
+          <div className="p-5 bg-orange border-t-2">
+            you have {toolCart.length + courseCart.length} in your cart
+          </div>
+        )}
+
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.code}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+
+        <div className="text-right mt-5 p-5">
+            <div className="font-bold text-2xl">Total: {total(rows)}$</div>
+            <button className="p-2 bg-black text-white mt-3 rounded-lg hover:text-black hover:bg-white hover:text-lg transition-all">Check Out</button>
+        </div>
+      </div>
+    </main>
+  );
+};
+
+export default Cart;

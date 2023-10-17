@@ -31,3 +31,31 @@ export const signUp = async (model) => {
     console.log(res);
     return res;
   };
+
+export const getCourses = async () => {{
+  const res = await axios.get(`http://localhost:8080/courses`)
+  console.log(res);
+  return res.data
+}}
+
+export const getCourseById = async (id) => {{
+  const res = await axios.get(`http://localhost:8080/courses/${id}`)
+  console.log(res);
+  return res.data
+}}
+
+export const getTools = async () => {{
+  const res = await axios.get(`http://localhost:8080/items`)
+  console.log(res);
+  return res.data
+}}
+
+export const getToolById = async (id) => {{
+  const res = await axios.get(`http://localhost:8080/items${id}`)
+  console.log(res);
+  return res.data
+}}
+
+export const api = {getCourses, getCourseById, getTools, getToolById}
+
+

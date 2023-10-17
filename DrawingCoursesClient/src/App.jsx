@@ -21,6 +21,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Registerdialog from "./pages/registration/Registerdialog";
 import { RegisterAction } from "./pages/registration/RegisterAction";
+import Cart from "./pages/cart/cart";
 
 function App() {
   const router = createBrowserRouter(
@@ -29,12 +30,17 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path="auth/login" element={<LoginPage />} action={LoginAction}/>
+
+          <Route path="Course/:id" element={<CoursesDetail />} />
           <Route path="Course" element={<Courses />} />
-          <Route path="CourseDetail" element={<CoursesDetail />} />
+          
+          {/* <Route path="CourseDetail" element={<CoursesDetail />} /> */}
           <Route path="Mentor" element={<Mentor />} />
           <Route path="Registration" element={<Registerdialog />} action={RegisterAction}/>
+          <Route path="Tool/:id" element={<ToolDetail />} />
           <Route path="Tool" element={<Tool />} />
-          <Route path="ToolDetail" element={<ToolDetail />} />
+          <Route path="cart" element={<Cart />} />
+          {/* <Route path="ToolDetail" element={<ToolDetail />} /> */}
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Admin />}/>

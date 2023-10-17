@@ -110,3 +110,170 @@ export const data = [
     date: '1 Day ago',
   },
 ];
+
+export const coursesData = [
+  {
+      course: 'Vẽ phông cảnh',
+      imageSrc: '/assets/courses/coursesOne.svg',
+      profession: 'Vẽ cây thông',
+      price: '40',
+      category: 'Beginner Courses'
+  },
+  {
+      course: 'Vẽ vật thể',
+      imageSrc: '/assets/courses/coursesTwo.svg',
+      profession: 'Vẽ con trym',
+      price: '21',
+      category: 'Beginner Courses'
+  },
+  {
+      course: 'Vẽ tranh tĩnh vật',
+      imageSrc: '/assets/courses/coursesThree.svg',
+      profession: 'Vẽ quả táo',
+      price: '21',
+      category: 'Beginner Courses'
+  },
+  {
+      course: 'Vẽ tranh tường',
+      imageSrc: '/assets/courses/coursesFour.svg',
+      profession: 'Vẽ đàn cò trên cánh đồng',
+      price: '99',
+      category: 'Beginner Courses'
+  },
+  {
+      course: 'Vẽ tranh trừu tượng',
+      imageSrc: '/assets/courses/coursesOne.svg',
+      profession: 'Học cách tìm cảm hứng',
+      price: '89',
+      category: 'Elementary Courses'
+  },
+  {
+      course: 'Vẽ tranh minh họa',
+      imageSrc: '/assets/courses/coursesThree.svg',
+      profession: 'Vẽ tờ báo',
+      price: '89',
+      category: 'Elementary Courses'
+  },
+  {
+      course: 'Vẽ tranh phong cảnh',
+      imageSrc: '/assets/courses/coursesFour.svg',
+      profession: 'Vẽ thành phố',
+      price: '69',
+      category: 'Elementary Courses'
+  },
+  {
+      course: 'Vẽ tranh mosaic',
+      imageSrc: '/assets/courses/coursesTwo.svg',
+      profession: 'Vẽ tranh cô gái bằng mảnh vỡ kính',
+      price: '69',
+      category: 'Elementary Courses'
+  },
+  {
+      course: 'Vẽ tranh khắc',
+      imageSrc: '/assets/courses/coursesTwo.svg',
+      profession: 'Tạo hình người phụ nữ',
+      price: '99',
+      category: 'Intermediate Courses'
+  },
+  {
+      course: 'Vẽ tranh trừu tượng',
+      imageSrc: '/assets/courses/coursesFour.svg',
+      profession: 'Học cách phối màu',
+      price: '99',
+      category: 'Intermediate Courses'
+  },
+  {
+      course: 'Vẽ tranh minh họa',
+      imageSrc: '/assets/courses/coursesOne.svg',
+      profession: 'Vẽ một cuốn sách',
+      price: '99',
+      category: 'Intermediate Courses'
+  },
+  {
+      course: 'Vẽ tranh chân dung',
+      imageSrc: '/assets/courses/coursesThree.svg',
+      profession: 'Vẽ lại nàng monali Huấn',
+      price: '89',
+      category: 'Intermediate Courses'
+  },
+  {
+      course: 'Vẽ tranh mosaic',
+      imageSrc: '/assets/courses/coursesThree.svg',
+      profession: 'Vẽ trang bằng gốm',
+      price: '21',
+      category: 'Upper-intermediate Courses'
+  },
+  {
+      course: 'Vẽ tranh tĩnh vật',
+      imageSrc: '/assets/courses/coursesFour.svg',
+      profession: 'Vẽ cái ghế và bàn',
+      price: '29',
+      category: 'Upper-intermediate Courses'
+  },
+  {
+      course: 'Vẽ tranh trừu tượng',
+      imageSrc: '/assets/courses/coursesOne.svg',
+      profession: 'Học cách bảo dưỡng',
+      price: '99',
+      category: 'Upper-intermediate Courses'
+  },
+  {
+      course: 'Vẽ tranh khắc',
+      imageSrc: '/assets/courses/coursesTwo.svg',
+      profession: 'Học cách vẽ trên kim loại',
+      price: '58',
+      category: 'Upper-intermediate Courses'
+  }
+];
+
+export const toolData = [
+  {
+      tool: 'Water Colour Paints',
+      imageSrc: '/assets/tool/toolOne.svg',
+      type: 'Winsor & Newton Artisan Water Mixable Oil Colour 37ml',
+      price: '40',
+      category: 'Paints'
+  },
+  {
+      tool: 'Pencils',
+      imageSrc: '/assets/tool/toolTwo.svg',
+      type: 'Derwent Inktense Pencil',
+      price: '21',
+      category: 'Drawing'
+  },
+  {
+      tool: 'Artist Paint Brushes',
+      imageSrc: '/assets/tool/toolThree.svg',
+      type: 'Robert Wade 980 Taklon Long Flat Brush',
+      price: '21',
+      category: 'Brushes'
+  },
+  {
+      tool: ' Cleaners for Artists ',
+      imageSrc: '/assets/tool/toolFour.svg',
+      type: 'Gamblin Gamsol Odorless Mineral Spirits',
+      price: '99',
+      category: 'Mediums, Gels, Gessos, Vanishes & Cleaners'
+  },
+  {
+      tool: 'Packs',
+      imageSrc: '/assets/tool/toolOne.svg',
+      type: 'Micador Watercolour Disc Packs',
+      price: '89',
+      category: 'Packs and Sets'
+  },
+  {
+      tool: 'Art Tutorial Books ',
+      imageSrc: '/assets/tool/toolTwo.svg',
+      type: 'Leonardo Collection Volume 48, Tricks of the Trade',
+      price: '89',
+      category: 'Books & Accessories'
+  },
+  {
+      tool: 'Tables',
+      imageSrc: '/assets/tool/toolThree.svg',
+      type: 'A2 Table Top Easel (Bulky Item Shipping may apply)',
+      price: '69',
+      category: 'Easels'
+  }
+];

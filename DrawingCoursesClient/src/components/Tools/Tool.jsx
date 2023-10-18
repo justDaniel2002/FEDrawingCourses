@@ -101,9 +101,9 @@ const Tool = () => {
                 <div className='flex nowhitespace space-x-5 rounded-xl bg-white p-1 overflow-x-auto'>
 
                     {/* FOR DESKTOP VIEW */}
-                    <button onClick={() => setSelectedButton('pen')} className={"bg-white " + (selectedButton === 'Paints' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"}>Pens</button>
-                    <button onClick={() => setSelectedButton('pencil')} className={"bg-white " + (selectedButton === 'Drawing' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"}>Pencils</button>
-                    <button onClick={() => setSelectedButton('eraser')} className={"bg-white " + (selectedButton === 'Brushes' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"}>Erasers</button>
+                    <button onClick={() => setSelectedButton('pen')} className={"bg-white " + (selectedButton === 'pen' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"}>Pens</button>
+                    <button onClick={() => setSelectedButton('pencil')} className={"bg-white " + (selectedButton === 'pencil' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"}>Pencils</button>
+                    <button onClick={() => setSelectedButton('eraser')} className={"bg-white " + (selectedButton === 'eraser' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"}>Erasers</button>
 
                     {/* FOR MOBILE VIEW */}
                     {/* <GlobeAltIcon onClick={() => setSelectedButton('')} width={70} height={70} className={"bg-white " + (selectedButton === 'Beginner Courses' ? 'border-b-2 border-orange fill-orange' : '') + " pb-2 block sm:hidden"} />

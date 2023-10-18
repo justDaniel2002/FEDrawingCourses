@@ -10,5 +10,5 @@ export const LoginAction = async ({ params, request }) => {
   console.log(data);
   const result = await signIn(data);
   console.log(result);
-  return decodeToken(result.token);
+  return {...decodeToken(result.token), token: result.token};
 };

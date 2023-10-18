@@ -22,6 +22,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Registerdialog from "./pages/registration/Registerdialog";
 import { RegisterAction } from "./pages/registration/RegisterAction";
 import Cart from "./pages/cart/cart";
+import MyCourses from "./pages/MyCourses/myCourses";
+import { cartAction } from "./pages/cart/CartAction";
 
 function App() {
   const router = createBrowserRouter(
@@ -39,8 +41,9 @@ function App() {
           <Route path="Registration" element={<Registerdialog />} action={RegisterAction}/>
           <Route path="Tool/:id" element={<ToolDetail />} />
           <Route path="Tool" element={<Tool />} />
-          <Route path="cart" element={<Cart />} />
+          <Route path="cart" element={<Cart />} action={cartAction}/>
           {/* <Route path="ToolDetail" element={<ToolDetail />} /> */}
+          <Route path="MyCourses" element={<MyCourses />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Admin />}/>

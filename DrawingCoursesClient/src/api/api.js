@@ -51,11 +51,20 @@ export const getTools = async () => {{
 }}
 
 export const getToolById = async (id) => {{
-  const res = await axios.get(`http://localhost:8080/items${id}`)
+  const res = await axios.get(`http://localhost:8080/items/${id}`)
   console.log(res);
   return res.data
 }}
 
-export const api = {getCourses, getCourseById, getTools, getToolById}
+export const postPayment = async (ammount, token) => {
+
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+  const res = await axios.post(`http://localhost:8080/payment/pay?price=${ammount}`)
+  console.log(res);
+  return res.data
+}
+
+export const api = {getCourses, getCourseById, getTools, getToolById, postPayment}
 
 

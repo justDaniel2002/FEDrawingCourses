@@ -7,12 +7,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useRecoilState } from "recoil";
-import { courseCartState, toolCartState } from "../../atom/accountState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { accountState, courseCartState, toolCartState } from "../../atom/accountState";
+import { Form, Link } from "react-router-dom";
+import { api } from "../../api/api";
 
 const columns = [
   { id: "Title", label: "Title", minWidth: 170 },
-  { id: "Type", label: "Type", minWidth: 100 },
+  { id: "Description", label: "Description", minWidth: 100 },
   {
     id: "Category",
     label: "Category",
@@ -37,33 +39,47 @@ const columns = [
 function createData(toolCart, courseCart) {
   const dbTool = toolCart.map((cart) => {
     const tool = cart.tool;
-    return {Title: tool.tool+" (tool)", Type: tool.type, Category: tool.category, Price: tool.price, Quantity: cart.quantity}
+    return {
+      Title: tool.name + " (tool)",
+      Description: tool.description,
+      Category: tool.category.name,
+      Price: tool.price,
+      Quantity: cart.quantity,
+    };
   });
 
   const dbCourse = courseCart.map((cart) => {
     const course = cart.course;
-    return {Title: course.course+" (course)", Type: course.profession, Category: course.category, Price: course.price, Quantity: cart.quantity}
+    return {
+      Title: course.title + " (course)",
+      Type: course.description,
+      Category: course.category.name,
+      Price: course.price,
+      Quantity: cart.quantity,
+    };
   });
-  return [
-    ...dbTool,
-    ...dbCourse
-  ];
+  return [...dbTool, ...dbCourse];
 }
 
-function total (db){
-  console.log(db)
-  const total = db.reduce((accumulator, currentValue) => accumulator + Number.parseInt(currentValue.Price), 0);
-  return total
+function total(db) {
+  console.log(db);
+  const total = db.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Number.parseInt(currentValue.Price) * currentValue.Quantity,
+    0
+  );
+  return total;
 }
 
 const Cart = () => {
+  const account = useRecoilValue(accountState)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const [toolCart, setToolCart] = useRecoilState(toolCartState);
   const [courseCart, setCourseCart] = useRecoilState(courseCartState);
 
-  const rows = createData(toolCart, courseCart)
+  const rows = createData(toolCart, courseCart);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -74,10 +90,25 @@ const Cart = () => {
     setPage(0);
   };
 
+  const postPayment = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+
+    const result = await api.postPayment(await formData.get(`ammount`), account.token)
+    console.log(result);
+    window.location.href = result
+  }
   return (
     <main className="mb-40">
       <div className="px-40 pb-40">
         <div className="text-3xl font-bold text-center my-20">Cart</div>
+        <Link
+          to={"/"}
+          className="inline-block p-2 bg-black text-white mb-3 rounded-lg hover:text-black hover:bg-white hover:text-lg transition-all"
+        >
+          Go back to shopping
+        </Link>
         {toolCart.length === 0 && courseCart.length === 0 ? (
           <div className="p-5 bg-orange border-t-2">
             you havent order anything
@@ -142,10 +173,13 @@ const Cart = () => {
           />
         </Paper>
 
-        <div className="text-right mt-5 p-5">
-            <div className="font-bold text-2xl">Total: {total(rows)}$</div>
-            <button className="p-2 bg-black text-white mt-3 rounded-lg hover:text-black hover:bg-white hover:text-lg transition-all">Check Out</button>
-        </div>
+        <Form onSubmit={(event) => postPayment(event)} method="post" className="text-right mt-5 p-5">
+          <input hidden value={total(rows)} name="ammount" />
+          <div className="font-bold text-2xl">Total: {total(rows)}$</div>
+          <button className="p-2 bg-black text-white mt-3 rounded-lg hover:text-black hover:bg-white hover:text-lg transition-all">
+            Check Out
+          </button>
+        </Form>
       </div>
     </main>
   );

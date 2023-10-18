@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { coursesData } from "../../data/data";
 import "../../css/counter.css";
-import { useRecoilState } from "recoil";
-import { courseCartState } from "../../atom/accountState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { accountState, courseCartState } from "../../atom/accountState";
 import { api } from "../../api/api";
+import { toast } from "react-toastify";
 
 const CourseDetail = () => {
   const { id } = useParams();
+  const account = useRecoilValue(accountState);
   const [courseCart, setCourseCart] = useRecoilState(courseCartState);
   const [course, setCourse] = useState();
   const [quantity, setQuantity] = useState(1);
@@ -15,24 +17,28 @@ const CourseDetail = () => {
 
   useEffect(() => {
     const callBack = async () => {
-      const getCourse = await api.getCourseById(id)
+      const getCourse = await api.getCourseById(id);
       setCourse(getCourse);
-    }
+    };
 
-    callBack()
-    
+    callBack();
   }, []);
 
   const onAddToCart = async () => {
-    setCourseCart([
-      ...courseCart,
-      {
-        course,
-        quantity,
-      },
-    ]);
+    const findCourse = courseCart.find((cart) => cart.course.id === course.id);
+    if (findCourse) {
+      toast("This course has already in your cart", { type: toast.TYPE.INFO });
+    } else {
+      setCourseCart([
+        ...courseCart,
+        {
+          course,
+          quantity,
+        },
+      ]);
 
-    navigate("/cart");
+      navigate("/cart");
+    }
   };
 
   return (
@@ -100,12 +106,21 @@ const CourseDetail = () => {
           </div>
         </div> */}
         <br />
-        <button
-          onClick={onAddToCart}
-          className="product-add-to-cart border p-2 rounded-xl font-medium mt-5 hover:bg-black hover:text-white hover:p-3 transition-all"
-        >
-          Add to Cart
-        </button>
+        {account?.sub ? (
+          <button
+            onClick={onAddToCart}
+            className="product-add-to-cart border p-2 rounded-xl font-medium mt-5 hover:bg-black hover:text-white hover:p-3 transition-all"
+          >
+            Add to Cart
+          </button>
+        ) : (
+          <Link
+            to={"/auth/login"}
+            className="inline-block product-add-to-cart border p-2 rounded-xl font-medium mt-5 hover:bg-black hover:text-white hover:p-3 transition-all"
+          >
+            Sign in to order
+          </Link>
+        )}
       </div>
     </div>
   );

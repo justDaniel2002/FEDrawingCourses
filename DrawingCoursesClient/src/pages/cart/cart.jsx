@@ -9,8 +9,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { accountState, courseCartState, toolCartState } from "../../atom/accountState";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
+import { toast } from "react-toastify";
 
 const columns = [
   { id: "Title", label: "Title", minWidth: 170 },
@@ -79,6 +80,8 @@ const Cart = () => {
   const [toolCart, setToolCart] = useRecoilState(toolCartState);
   const [courseCart, setCourseCart] = useRecoilState(courseCartState);
 
+  const navigate = useNavigate()
+
   const rows = createData(toolCart, courseCart);
 
   const handleChangePage = (event, newPage) => {
@@ -97,7 +100,11 @@ const Cart = () => {
 
     const result = await api.postPayment(await formData.get(`ammount`), account.token)
     console.log(result);
-    window.location.href = result
+    window.open(result.successUrl, '_blank');
+    setToolCart([])
+    setCourseCart([])
+    toast("check out successfully", {type: toast.TYPE.SUCCESS})
+    navigate("/")
   }
   return (
     <main className="mb-40">

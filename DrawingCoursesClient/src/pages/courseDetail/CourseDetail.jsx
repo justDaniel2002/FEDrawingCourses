@@ -42,8 +42,19 @@ const CourseDetail = () => {
   };
 
   const submitComment = (event) => {
+    event.preventDefault(); // Prevent the form from actually submitting
 
+    // Get the form element from the event target
+    const form = event.target;
+    const comment = form.elements.comment.value;
+    const data = {
+      "user":{
+          "id":1
+      },
+      "courseId":1,
+      "comment":"awesome"
   }
+  };
 
   return (
     <div className="product-page mt-40 pb-40 px-40">
@@ -134,11 +145,17 @@ const CourseDetail = () => {
             <Form method="post">
               <div className="1/5 font-bold mb-2 ml-1">{account?.sub}</div>
               <input
+                name="comment"
                 required
                 className="border p-2 rounded-full w-4/5 mr-3"
                 placeholder={`${account?.sub} comment your thought`}
               />
-              <button onClick={(event) => submitComment(event)} className="p-3 rounded-3xl bg-black text-white font-medium hover:bg-white hover:text-black">Comment</button>
+              <button
+                onClick={(event) => submitComment(event)}
+                className="p-3 rounded-3xl bg-black text-white font-medium hover:bg-white hover:text-black"
+              >
+                Comment
+              </button>
             </Form>
           ) : (
             <div>Sign in to comment</div>

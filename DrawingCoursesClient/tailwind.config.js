@@ -18,7 +18,8 @@ export default {
       'emailbg': '#6a4c6d',
       'offwhite': ' #FDFDFD',
       'offblack' :'#333333',
-      'red' : '#FF605C'
+      'red' : '#FF605C',
+      'buttonBlue':'#4287f5'
     },
     fontFamily: {
       'inter': ['Inter', "sans-serif"]

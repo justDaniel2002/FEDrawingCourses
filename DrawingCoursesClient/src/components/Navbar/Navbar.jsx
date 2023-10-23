@@ -35,6 +35,20 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
+  const unhidden = () => {
+    const menu = document.getElementById("accountMenu");
+    if (menu.classList.contains("hidden")) {
+      menu.classList.remove("hidden");
+    }
+  };
+
+  const hidden = () => {
+    const menu = document.getElementById("accountMenu");
+    if (!menu.classList.contains("hidden")) {
+      menu.classList.add("hidden");
+    }
+  };
+
   return (
     <Disclosure as="nav" className="bg-lightpink navbar">
       <>
@@ -78,7 +92,7 @@ const Navbar = () => {
                   <Contactus />
                   {account?.sub ? (
                     <Link
-                      to={"MyCourses"}
+                      to={"/MyCourses"}
                       className="hover:text-purple px-3 py-4 text-15px font-medium space-links"
                       aria-current="page"
                     >
@@ -117,7 +131,35 @@ const Navbar = () => {
                     <div className="hidden md:block">
                       {account?.sub ? (
                         <>
-                          <p className="text-sky-600"> {account?.sub}</p>
+                          <div onMouseEnter={unhidden} className="text-sky-600">
+                            {" "}
+                            {account?.sub}
+                            <div
+                              id="accountMenu"
+                              onMouseLeave={(event) => hidden(event)}
+                              className="hidden absolute border border-grey500 bg-white rounded-xl w-56 -right-14"
+                            >
+                              <div className="px-5 py-3 flex items-center">
+                                <img
+                                  className="w-1/3 mr-1"
+                                  src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
+                                />
+                                <div className="2/3 overflow-hidden">
+                                  <div className="font-semibold">{account?.sub}</div>
+                                  <div>{account?.iss}</div>
+                                </div>
+                              </div>
+                              <Link
+                                to={"/MyCourses"}
+                                className="block hover:bg-grey500 px-5 py-3"
+                              >
+                                My Course
+                              </Link>
+                              <Link to={"/Profile"} className="block hover:bg-grey500 px-5 py-3">
+                                Profile
+                              </Link>
+                            </div>
+                          </div>
                           <button
                             className="text-red-500"
                             onClick={() => {

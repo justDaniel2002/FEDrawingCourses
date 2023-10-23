@@ -24,6 +24,7 @@ import { RegisterAction } from "./pages/registration/RegisterAction";
 import Cart from "./pages/cart/cart";
 import MyCourses from "./pages/MyCourses/myCourses";
 import { StudyingCourses } from "./pages/StudyingCourse/StudyingCourse";
+import { Profile } from "./pages/Profile/Profile";
 
 function App() {
   const router = createBrowserRouter(
@@ -46,6 +47,9 @@ function App() {
           <Route path="MyCourses" element={<MyCourses />} />
           <Route path="StudyingCourse" element={<StudyingCourses />} />
         </Route>
+
+        <Route path="/Profile" element={<Profile />} />
+
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Admin />}/>
           <Route path="customers" element={<Customers />}/>

@@ -23,6 +23,7 @@ import Registerdialog from "./pages/registration/Registerdialog";
 import { RegisterAction } from "./pages/registration/RegisterAction";
 import Cart from "./pages/cart/cart";
 import MyCourses from "./pages/MyCourses/myCourses";
+import { StudyingCourses } from "./pages/StudyingCourse/StudyingCourse";
 
 function App() {
   const router = createBrowserRouter(
@@ -43,6 +44,7 @@ function App() {
           <Route path="cart" element={<Cart />}/>
           {/* <Route path="ToolDetail" element={<ToolDetail />} /> */}
           <Route path="MyCourses" element={<MyCourses />} />
+          <Route path="StudyingCourse" element={<StudyingCourses />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Admin />}/>

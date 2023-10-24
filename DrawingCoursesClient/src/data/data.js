@@ -117,112 +117,128 @@ export const coursesData = [
       imageSrc: '/assets/courses/coursesOne.svg',
       profession: 'Vẽ cây thông',
       price: '40',
-      category: 'Beginner Courses'
+      category: 'Beginner Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ vật thể',
       imageSrc: '/assets/courses/coursesTwo.svg',
       profession: 'Vẽ con trym',
       price: '21',
-      category: 'Beginner Courses'
+      category: 'Beginner Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh tĩnh vật',
       imageSrc: '/assets/courses/coursesThree.svg',
       profession: 'Vẽ quả táo',
       price: '21',
-      category: 'Beginner Courses'
+      category: 'Beginner Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh tường',
       imageSrc: '/assets/courses/coursesFour.svg',
       profession: 'Vẽ đàn cò trên cánh đồng',
       price: '99',
-      category: 'Beginner Courses'
+      category: 'Beginner Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh trừu tượng',
       imageSrc: '/assets/courses/coursesOne.svg',
       profession: 'Học cách tìm cảm hứng',
       price: '89',
-      category: 'Elementary Courses'
+      category: 'Elementary Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh minh họa',
       imageSrc: '/assets/courses/coursesThree.svg',
       profession: 'Vẽ tờ báo',
       price: '89',
-      category: 'Elementary Courses'
+      category: 'Elementary Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh phong cảnh',
       imageSrc: '/assets/courses/coursesFour.svg',
       profession: 'Vẽ thành phố',
       price: '69',
-      category: 'Elementary Courses'
+      category: 'Elementary Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh mosaic',
       imageSrc: '/assets/courses/coursesTwo.svg',
       profession: 'Vẽ tranh cô gái bằng mảnh vỡ kính',
       price: '69',
-      category: 'Elementary Courses'
+      category: 'Elementary Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh khắc',
       imageSrc: '/assets/courses/coursesTwo.svg',
       profession: 'Tạo hình người phụ nữ',
       price: '99',
-      category: 'Intermediate Courses'
+      category: 'Intermediate Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh trừu tượng',
       imageSrc: '/assets/courses/coursesFour.svg',
       profession: 'Học cách phối màu',
       price: '99',
-      category: 'Intermediate Courses'
+      category: 'Intermediate Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh minh họa',
       imageSrc: '/assets/courses/coursesOne.svg',
       profession: 'Vẽ một cuốn sách',
       price: '99',
-      category: 'Intermediate Courses'
+      category: 'Intermediate Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh chân dung',
       imageSrc: '/assets/courses/coursesThree.svg',
       profession: 'Vẽ lại nàng monali Huấn',
       price: '89',
-      category: 'Intermediate Courses'
+      category: 'Intermediate Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh mosaic',
       imageSrc: '/assets/courses/coursesThree.svg',
       profession: 'Vẽ trang bằng gốm',
       price: '21',
-      category: 'Upper-intermediate Courses'
+      category: 'Upper-intermediate Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh tĩnh vật',
       imageSrc: '/assets/courses/coursesFour.svg',
       profession: 'Vẽ cái ghế và bàn',
       price: '29',
-      category: 'Upper-intermediate Courses'
+      category: 'Upper-intermediate Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh trừu tượng',
       imageSrc: '/assets/courses/coursesOne.svg',
       profession: 'Học cách bảo dưỡng',
       price: '99',
-      category: 'Upper-intermediate Courses'
+      category: 'Upper-intermediate Courses',
+      createdDate: "17/10/2013"
   },
   {
       course: 'Vẽ tranh khắc',
       imageSrc: '/assets/courses/coursesTwo.svg',
       profession: 'Học cách vẽ trên kim loại',
       price: '58',
-      category: 'Upper-intermediate Courses'
+      category: 'Upper-intermediate Courses',
+      createdDate: "17/10/2013"
   }
 ];
 

@@ -17,7 +17,9 @@ const LoginPage = () => {
       setAccount(data);
       if (data.role === "ROLE_ADMIN") {
         navigae("/admin");
-      } else {
+      } else if(data.role === "ROLE_INSTRUCTOR"){
+        navigae("/MentorPage");
+      } else{
         navigae("/");
       }
     } else {

@@ -8,10 +8,15 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { accountState, courseCartState, toolCartState } from "../../atom/accountState";
+import {
+  accountState,
+  courseCartState,
+  toolCartState,
+} from "../../atom/accountState";
 import { Form, Link, useNavigate } from "react-router-dom";
 import { api } from "../../api/api";
 import { toast } from "react-toastify";
+import { setTitem } from "../../utils/localStorageExtension";
 
 const columns = [
   { id: "Title", label: "Title", minWidth: 170 },
@@ -73,14 +78,14 @@ function total(db) {
 }
 
 const Cart = () => {
-  const account = useRecoilValue(accountState)
+  const account = useRecoilValue(accountState);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const [toolCart, setToolCart] = useRecoilState(toolCartState);
   const [courseCart, setCourseCart] = useRecoilState(courseCartState);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const rows = createData(toolCart, courseCart);
 
@@ -98,14 +103,21 @@ const Cart = () => {
     const form = event.target;
     const formData = new FormData(form);
 
-    const result = await api.postPayment(await formData.get(`ammount`), account.token)
+    const result = await api.postPayment(
+      await formData.get(`ammount`),
+      account.token
+    );
     console.log(result);
-    window.open(result.successUrl, '_blank');
-    setToolCart([])
-    setCourseCart([])
-    toast("check out successfully", {type: toast.TYPE.SUCCESS})
-    navigate("/")
-  }
+    if (result && result.length > 0) {
+      setTitem("cartCourse", courseCart)
+      setTitem("cartTool", toolCart)
+      window.open(result, "_blank");
+      setToolCart([]);
+      setCourseCart([]);
+      toast("check out successfully", { type: toast.TYPE.SUCCESS });
+      navigate("/");
+    }
+  };
   return (
     <main className="mb-40">
       <div className="px-40 pb-40">
@@ -180,7 +192,11 @@ const Cart = () => {
           />
         </Paper>
 
-        <Form onSubmit={(event) => postPayment(event)} method="post" className="text-right mt-5 p-5">
+        <Form
+          onSubmit={(event) => postPayment(event)}
+          method="post"
+          className="text-right mt-5 p-5"
+        >
           <input hidden value={total(rows)} name="ammount" />
           <div className="font-bold text-2xl">Total: {total(rows)}$</div>
           <button className="p-2 bg-black text-white mt-3 rounded-lg hover:text-black hover:bg-white hover:text-lg transition-all">

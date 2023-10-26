@@ -16,8 +16,8 @@ import AdminLayout from "./layouts/adminLayout";
 import Customers from "./pages/customers/customers";
 import Orders from "./pages/orders/orders";
 import { LoginAction } from "./pages/auth/LoginAction";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Registerdialog from "./pages/registration/Registerdialog";
 import { RegisterAction } from "./pages/registration/RegisterAction";
 import Cart from "./pages/cart/cart";
@@ -26,38 +26,62 @@ import { StudyingCourses } from "./pages/StudyingCourse/StudyingCourse";
 import { Profile } from "./pages/Profile/Profile";
 import Admin from "./pages/admin/page";
 import { MentorPage } from "./pages/mentorPage/MentorPage";
+import { PaymentSucess } from "./pages/paymentSucess/PaymentSucess";
+import { useRecoilState } from "recoil";
+import { accountState } from "./atom/accountState";
+import { getTitem } from "./utils/localStorageExtension";
+import { useEffect } from "react";
 
 function App() {
+  const [account, setAccount] = useRecoilState(accountState);
+  useEffect(() => {
+    const localAccount = getTitem("account");
+    console.log(localAccount);
+    if (localAccount?.sub !== undefined) {
+      setAccount(localAccount);
+    }
+  }, []);
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route errorElement={<h1>Error</h1>}>
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
-          <Route path="auth/login" element={<LoginPage />} action={LoginAction}/>
+          <Route
+            path="auth/login"
+            element={<LoginPage />}
+            action={LoginAction}
+          />
 
           <Route path="Course/:id" element={<CoursesDetail />} />
           <Route path="Course" element={<Courses />} />
-          
+
           {/* <Route path="CourseDetail" element={<CoursesDetail />} /> */}
           <Route path="Mentor" element={<Mentor />} />
-          <Route path="Registration" element={<Registerdialog />} action={RegisterAction}/>
+          <Route
+            path="Registration"
+            element={<Registerdialog />}
+            action={RegisterAction}
+          />
           <Route path="Tool/:id" element={<ToolDetail />} />
           <Route path="Tool" element={<Tool />} />
-          <Route path="cart" element={<Cart />}/>
+          <Route path="cart" element={<Cart />} />
           {/* <Route path="ToolDetail" element={<ToolDetail />} /> */}
           <Route path="MyCourses" element={<MyCourses />} />
-          <Route path="StudyingCourse/:courseId" element={<StudyingCourses />} />
+          <Route
+            path="StudyingCourse/:courseId"
+            element={<StudyingCourses />}
+          />
           <Route path="Mentor" element={<Mentor />} />
         </Route>
 
         <Route path="/Profile" element={<Profile />} />
         <Route path="/MentorPage" element={<MentorPage />} />
-
+        <Route path="/pay/success" element={<PaymentSucess />} />
 
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Admin />}/>
-          <Route path="customers" element={<Customers />}/>
-          <Route path="orders" element={<Orders />}/>
+          <Route index element={<Admin />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="orders" element={<Orders />} />
         </Route>
       </Route>
     ),

@@ -83,6 +83,18 @@ export const postComment = async (data) => {
   return res.data
 }
 
-export const api = {getCourses,getMyCourses, getCourseById, getTools, getToolById, postPayment, postComment, getCourseDetails}
+export const orderCourse = async (data) => {
+  const res = await axios.post(`http://localhost:8080/ordercourses`, data)
+  console.log(res);
+  return res.data
+}
+
+export const orderTool = async (data) => {
+  const res = await axios.post(`http://localhost:8080/orderitems`, data)
+  console.log(res);
+  return res.data
+}
+
+export const api = {getCourses,getMyCourses, getCourseById, getTools, getToolById, postPayment, postComment, getCourseDetails, orderCourse, orderTool}
 
 

@@ -13,10 +13,12 @@ export const StudyingCourses = () => {
   useEffect(() => {
     const callback = async() => {
       const courseLessions = await api.getCourseDetails(courseId)
+      console.log("courseLessions", courseLessions)
       await setParts(courseLessions)
       await setPart(Parts[0])
-      const getCourse = await api.getCourses(courseId)
+      const getCourse = await api.getCourseById(courseId)
       await setCourse(getCourse)
+      console.log("getCourse", getCourse)
     }
 
     callback()
@@ -28,7 +30,7 @@ export const StudyingCourses = () => {
         <div className="w-8/12">
           <iframe
             className="w-full h-5/6"
-            src={`https://www.youtube.com/embed/${Ipart.url}`}
+            src={`https://www.youtube.com/embed/${Ipart?.url}`}
           ></iframe>
 
           <div className="border-2 border-grey500 mt-10 p-5 shadow-lg">
@@ -51,11 +53,11 @@ export const StudyingCourses = () => {
             </div>
             <div className="px-5">
               <div className="font-medium">Khóa</div>
-              <div>{Course.title}</div>
+              <div>{Course?.title}</div>
               <div className="font-medium">Mô tả</div>
-              <div>{studyingCourses.description}</div>
+              <div>{Course?.description}</div>
               <div className="font-medium">Độ khó</div>
-              <div>{studyingCourses.level}</div>
+              <div>{Course?.level}</div>
             </div>
           </div>
         </div>
@@ -71,7 +73,7 @@ export const StudyingCourses = () => {
                   Ipart == part ? "bg-offwhite" : "bg-grey500"
                 }`}
               >
-                {part.title}
+                {part?.title}
               </div>
             </>
           ))}

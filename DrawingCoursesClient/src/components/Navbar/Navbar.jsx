@@ -163,6 +163,7 @@ const Navbar = () => {
                           <button
                             className="text-red-500"
                             onClick={() => {
+                              localStorage.clear();
                               setAccount(undefined);
                               navigate("/auth/login");
                             }}

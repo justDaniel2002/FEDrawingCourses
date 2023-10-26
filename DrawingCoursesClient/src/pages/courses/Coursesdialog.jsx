@@ -6,6 +6,8 @@ import { GlobeAltIcon, DevicePhoneMobileIcon, CircleStackIcon, CloudIcon } from 
 import { Link } from "react-router-dom";
 import { coursesData } from "../../data/data";
 import { api } from "../../api/api";
+import { useRecoilValue } from "recoil";
+import { accountState } from "../../atom/accountState";
 
 // interface Name {
 //     course: string;
@@ -18,8 +20,9 @@ import { api } from "../../api/api";
 
 
 const Coursesdialog = () => {
-
+    const account = useRecoilValue(accountState)
     const [courses, setCourses] = useState([]);
+    const [MyCourse, setMyCourse] = useState([])
     const [selectedButton, setSelectedButton] = useState('Beginner Courses');
 
     const BeginnerCourses = courses.filter((course) => course.level === 'BEGINNER');
@@ -30,6 +33,8 @@ const Coursesdialog = () => {
         const callBack = async () => {
             const getCourses = await api.getCourses()
             setCourses(getCourses)
+            const getMyCourses = await api.getMyCourses(account.sub)
+            setMyCourse(getMyCourses)
         }
 
         callBack()
@@ -65,7 +70,7 @@ const Coursesdialog = () => {
                         {name.title}
                     </div>
                     <div className="mt-6 block text-lg font-semibold text-green border-solid border-2 border-green rounded-md px-1 truncate">
-                        ${name.price}
+                     {MyCourse.some(course => course.id === name.id)?"Paid":<>${name.price}</>}
                     </div>
                 </div>
                 <p aria-hidden="true" className="mt-2 mb-5 text-2xl font-semibold truncate">

@@ -1,8 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { studyingCourses } from "../../data/StudyingCourse";
+import { useParams } from "react-router-dom";
+import { api } from "../../api/api";
 
 export const StudyingCourses = () => {
-  const [Ipart, setPart] = useState(studyingCourses.parts[0]);
+  const [Parts, setParts] = useState([]);
+  const [Ipart, setPart] = useState();
+  const [Course, setCourse] = useState()
+
+  const { courseId } = useParams();
+
+  useEffect(() => {
+    const callback = async() => {
+      const courseLessions = await api.getCourseDetails(courseId)
+      await setParts(courseLessions)
+      await setPart(Parts[0])
+      const getCourse = await api.getCourses(courseId)
+      await setCourse(getCourse)
+    }
+
+    callback()
+  }, []);
 
   return (
     <main className="my-80">
@@ -10,7 +28,7 @@ export const StudyingCourses = () => {
         <div className="w-8/12">
           <iframe
             className="w-full h-5/6"
-            src={`https://www.youtube.com/embed/${Ipart.videos}`}
+            src={`https://www.youtube.com/embed/${Ipart.url}`}
           ></iframe>
 
           <div className="border-2 border-grey500 mt-10 p-5 shadow-lg">
@@ -33,11 +51,11 @@ export const StudyingCourses = () => {
             </div>
             <div className="px-5">
               <div className="font-medium">Khóa</div>
-              <div>{studyingCourses.course}</div>
+              <div>{Course.title}</div>
               <div className="font-medium">Mô tả</div>
-              <div>{studyingCourses.profession}</div>
+              <div>{studyingCourses.description}</div>
               <div className="font-medium">Độ khó</div>
-              <div>{studyingCourses.category}</div>
+              <div>{studyingCourses.level}</div>
             </div>
           </div>
         </div>
@@ -45,7 +63,7 @@ export const StudyingCourses = () => {
           <div className="py-3 px-10 border-b border-grey500">
             Nội dung khóa học
           </div>
-          {studyingCourses.parts.map((part) => (
+          {Parts.map((part) => (
             <>
               <div
                 onClick={() => setPart(part)}

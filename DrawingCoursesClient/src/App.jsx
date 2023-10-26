@@ -46,7 +46,7 @@ function App() {
           <Route path="cart" element={<Cart />}/>
           {/* <Route path="ToolDetail" element={<ToolDetail />} /> */}
           <Route path="MyCourses" element={<MyCourses />} />
-          <Route path="StudyingCourse" element={<StudyingCourses />} />
+          <Route path="StudyingCourse/:courseId" element={<StudyingCourses />} />
           <Route path="Mentor" element={<Mentor />} />
         </Route>
 

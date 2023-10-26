@@ -41,19 +41,23 @@ const CourseDetail = () => {
     }
   };
 
-  const submitComment = (event) => {
+  const submitComment = async (event) => {
     event.preventDefault(); // Prevent the form from actually submitting
 
     // Get the form element from the event target
     const form = event.target;
     const comment = form.elements.comment.value;
-    const data = {
-      "user":{
-          "id":1
-      },
-      "courseId":1,
-      "comment":"awesome"
-  }
+    if (comment.length > 0) {
+      const data = {
+        user: {
+          username: account.sub,
+        },
+        courseId: id,
+        comment: comment,
+      };
+
+      await api.postComment(data)
+    }
   };
 
   return (

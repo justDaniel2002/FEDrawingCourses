@@ -5,8 +5,11 @@ import { GlobeAltIcon, DevicePhoneMobileIcon, CircleStackIcon, CloudIcon } from 
 import { Link } from "react-router-dom";
 import { api } from "../../api/api";
 import SearchCourses from "../courses/SearchCourse";
+import { useRecoilValue } from "recoil";
+import { accountState } from "../../atom/accountState";
 
 const MyCoursesDialog = () => {
+    const account = useRecoilValue(accountState)
     const [courses, setCourses] = useState([]);
     const [selectedButton, setSelectedButton] = useState('Beginner Courses');
 
@@ -16,7 +19,7 @@ const MyCoursesDialog = () => {
 
     useEffect(() => {
         const callBack = async () => {
-            const getCourses = await api.getCourses()
+            const getCourses = await api.getMyCourses(account.sub)
             setCourses(getCourses)
         }
 
@@ -39,7 +42,7 @@ const MyCoursesDialog = () => {
 
     const nameElements = selectedNames.map((name, index) => (
 
-        <Link to={`/StudyingCourse`} className="block" key={index}>
+        <Link to={`/StudyingCourse/${name.id}`} className="block" key={index}>
             <div className=" text-lg sm:text-sm py-5 lg:py-0">
                 <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                     <img

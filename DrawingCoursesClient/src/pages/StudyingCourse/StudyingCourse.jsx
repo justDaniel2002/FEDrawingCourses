@@ -14,14 +14,15 @@ export const StudyingCourses = () => {
     const callback = async() => {
       const courseLessions = await api.getCourseDetails(courseId)
       console.log("courseLessions", courseLessions)
-      await setParts(courseLessions)
-      await setPart(Parts[0])
+      setParts(courseLessions)
       const getCourse = await api.getCourseById(courseId)
-      await setCourse(getCourse)
+      setCourse(getCourse)
+      setPart(courseLessions[0])
       console.log("getCourse", getCourse)
     }
 
     callback()
+    
   }, []);
 
   return (

@@ -78,6 +78,7 @@ export const postPayment = async (ammount, token) => {
 }
 
 export const postComment = async (data) => {
+  console.log(data)
   const res = await axios.post(`http://localhost:8080/comments`, data)
   console.log(res);
   return res.data
@@ -95,6 +96,13 @@ export const orderTool = async (data) => {
   return res.data
 }
 
-export const api = {getCourses,getMyCourses, getCourseById, getTools, getToolById, postPayment, postComment, getCourseDetails, orderCourse, orderTool}
+export const getCourseByCategory = async (id) => {{
+  const res = await axios.get(`http://localhost:8080/courses/category/${id}`)
+  console.log(res);
+  return res.data
+}}
+
+export const api = {getCourses,getMyCourses, getCourseById, getTools, getToolById, postPayment, postComment, 
+  getCourseDetails, orderCourse, orderTool, getCourseByCategory}
 
 

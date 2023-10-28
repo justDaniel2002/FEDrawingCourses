@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { accountState, courseCartState } from "../../atom/accountState";
 import { api } from "../../api/api";
 import { toast } from "react-toastify";
+import StarIcon from "@mui/icons-material/Star";
 
 const CourseDetail = () => {
   const { id } = useParams();
@@ -14,17 +15,23 @@ const CourseDetail = () => {
   const [courseCart, setCourseCart] = useRecoilState(courseCartState);
   const [course, setCourse] = useState();
   const [quantity, setQuantity] = useState(1);
+  const [coursesWSC, setCoursesWSC] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const callBack = async () => {
       const getCourse = await api.getCourseById(id);
       setCourse(getCourse);
-      const getMyCourses = await api.getMyCourses(account.sub);
+      const getMyCourses = await api.getMyCourses(account?.sub);
       setMyCourse(getMyCourses);
+      const getCoursesWSC = await api.getCourseByCategory(
+        getCourse?.category.id
+      );
+      setCoursesWSC(getCoursesWSC);
     };
 
     callBack();
+    window.scrollTo(0, 0);
   }, []);
 
   const onAddToCart = async () => {
@@ -68,23 +75,52 @@ const CourseDetail = () => {
     }
   };
 
+  const RatingIcon = () => (
+    <span className="text-starYellow">
+      <StarIcon />
+    </span>
+  );
+
+  const printRating = (n) => {
+    const ratingArray = [];
+    for (let i = 0; i < n; i++) {
+      ratingArray.push(<RatingIcon key={i} />);
+    }
+    return ratingArray;
+  };
+
   return (
-    <div className="product-page mt-40 pb-40 px-40">
+    <div className=" mt-40 px-40">
       <div className="flex items-center">
         <div className="product-image w-3/6 mr-20">
           <img src={course?.img} alt={course?.title} className="w-full" />
         </div>
         <div className="product-info w-3/6">
-          <div className="product-name mb-10 flex justify-between items-center">
-            <div>{course?.title}</div>
-            <div className="text-green font-bold border-2 border-green p-1 rounded-xl">
-              $ {course?.price}
+          <div className="mb-3 product-name mr-10 flex justify-between items-center font-bold text-3xl">
+            <div className="w-9/12">{course?.title}</div>
+            <div className="w-3/12 text-center text-green font-bold ">
+              <span className="rounded-xl border-2 border-green p-1">
+                {course?.price} $
+              </span>
             </div>
           </div>
-          <p className="product-description font-bold text-3xl">
-            {course?.category.name}
+          <div className="flex mb-10 text-starYellow">
+            {printRating(course?.rating)}
+          </div>
+          <p className="product-description">
+            Category: {course?.category.name}
           </p>
-          <p className="product-description font-medium text-white bg-black text-xl mt-3 p-2 inline-block rounded-lg">
+          <p
+            className={`product-description font-medium text-white ${
+              course?.level === "BEGINNER"
+                ? "bg-green"
+                : course?.level === "INTERMEDIATE"
+                ? "bg-#ffc640"
+                : course?.level === "ADVANCED"
+                ? "bg-#f2aa00"
+                : "bg-green"
+            } text-xl mt-3 p-2 inline-block rounded-lg`}
+          >
             {course?.level}
           </p>
 
@@ -136,11 +172,16 @@ const CourseDetail = () => {
           <br />
           {account?.sub ? (
             <button
-              onClick={() => {MyCourse.some(Mcourse => Mcourse.id === course.id)?"":onAddToCart()}}
+              onClick={() => {
+                MyCourse.some((Mcourse) => Mcourse.id === course.id)
+                  ? ""
+                  : onAddToCart();
+              }}
               className="product-add-to-cart border p-2 rounded-xl font-medium mt-5 hover:bg-black hover:text-white hover:p-3 transition-all"
             >
-              {MyCourse.some(Mcourse => Mcourse.id === course.id)?"Paid":"Add to Cart"}
-              
+              {MyCourse.some((Mcourse) => Mcourse.id === course.id)
+                ? "Paid"
+                : "Add to Cart"}
             </button>
           ) : (
             <Link
@@ -152,31 +193,81 @@ const CourseDetail = () => {
           )}
         </div>
       </div>
-      <div className="border rounded-2xl p-5 mt-10">
-        <div className="mb-5 items-center">
-          {account?.sub ? (
-            <Form method="post" onSubmit={(event) => submitComment(event)}>
-              <div className="1/5 font-bold mb-2 ml-1">{account?.sub}</div>
-              <input
-                name="comment"
-                required
-                className="border p-2 rounded-full w-4/5 mr-3"
-                placeholder={`${account?.sub} comment your thought`}
-              />
-              <button className="p-3 rounded-3xl bg-black text-white font-medium hover:bg-white hover:text-black">
-                Comment
-              </button>
-            </Form>
-          ) : (
-            <div>Sign in to comment</div>
-          )}
-        </div>
+      <button className="rounded-full py-3 text-white px-10 font-semibold bg-gradient-to-r from-#04a3b8 to-#7eb8bf my-5">
+        Description
+      </button>
+      <div>{course?.description}</div>
+      <div className="rounded-2xl p-5 mt-10">
         {course?.comments?.map((comment) => (
           <div className="mb-5">
-            <div className="text-sm font-semibold">{comment.user.name}</div>
+            <div className="text-xl font-bold flex items-center mb-3">
+              <img
+                className="w-10 mr-3"
+                src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
+              />
+              {comment.user.name}
+            </div>
             <div className="ml-1">{comment.comment}</div>
           </div>
         ))}
+        <div className="text-4xl text-center font-bold my-10">
+          Related Courses
+        </div>
+
+        <div className="flex justify-center">
+          {coursesWSC.slice(0, 4).map((name, index) => (
+            <div
+              onClick={() => {
+                setCourse(name);
+                window.scrollTo(0, 0);
+              }}
+              className="block w-1/4 px-3"
+              key={index}
+            >
+              <div className=" text-lg sm:text-sm py-5 lg:py-0">
+                <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                  <img
+                    src={name.img}
+                    alt={name.title}
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
+                <div className="flex justify-between">
+                  <div className="mt-6 block font-normal text-gray-900 truncate">
+                    {name.title}
+                  </div>
+                  <div className="mt-6 block text-lg font-semibold text-green border-solid border-2 border-green rounded-md px-1">
+                    {MyCourse.some((course) => course.id === name.id) ? (
+                      "Paid"
+                    ) : (
+                      <>${name.price}</>
+                    )}
+                  </div>
+                </div>
+                <p
+                  aria-hidden="true"
+                  className="mt-2 mb-5 text-2xl font-semibold truncate"
+                >
+                  {name.description}
+                </p>
+
+                <div className="flex justify-between border-solid border-2 border-grey500 rounded-md p-2">
+                  <p>12 Classes</p>
+                  <div className="flex flex-row space-x-4">
+                    <div className="flex">
+                      <img src={"/assets/courses/account.svg"} alt="circle" />
+                      <p className="text-lightgrey ml-1">120</p>
+                    </div>
+                    <div className="flex">
+                      <img src={"/assets/courses/Star.svg"} alt="star" />
+                      <p className="ml-1">{name.rating}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

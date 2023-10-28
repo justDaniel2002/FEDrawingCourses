@@ -133,7 +133,25 @@ const Navbar = () => {
                         <>
                           <div onMouseEnter={unhidden} className="text-sky-600">
                             {" "}
-                            {account?.sub}
+                            <div className="flex items-center">
+                              <img
+                                className="w-10 mr-3"
+                                src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
+                              />
+                              {account?.sub}
+                              <div
+                            className="text-red-500 w-28 ml-3"
+                            onClick={() => {
+                              localStorage.clear();
+                              setAccount(undefined);
+                              navigate("/auth/login");
+                            }}
+                          >
+                            Sign Out
+                          </div>
+                            </div>
+
+                            
                             <div
                               id="accountMenu"
                               onMouseLeave={(event) => hidden(event)}
@@ -145,7 +163,9 @@ const Navbar = () => {
                                   src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
                                 />
                                 <div className="2/3 overflow-hidden">
-                                  <div className="font-semibold">{account?.sub}</div>
+                                  <div className="font-semibold">
+                                    {account?.sub}
+                                  </div>
                                   <div>{account?.iss}</div>
                                 </div>
                               </div>
@@ -155,21 +175,15 @@ const Navbar = () => {
                               >
                                 My Course
                               </Link>
-                              <Link to={"/Profile"} className="block hover:bg-grey500 px-5 py-3">
+                              <Link
+                                to={"/Profile"}
+                                className="block hover:bg-grey500 px-5 py-3"
+                              >
                                 Profile
                               </Link>
                             </div>
                           </div>
-                          <button
-                            className="text-red-500"
-                            onClick={() => {
-                              localStorage.clear();
-                              setAccount(undefined);
-                              navigate("/auth/login");
-                            }}
-                          >
-                            Sign Out
-                          </button>
+                          
                         </>
                       ) : (
                         <button

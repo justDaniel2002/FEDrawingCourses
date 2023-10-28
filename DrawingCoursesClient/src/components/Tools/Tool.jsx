@@ -62,9 +62,9 @@ const Tool = () => {
                         ${name.price}
                     </div>
                 </div>
-                <p aria-hidden="true" className="mt-2 mb-5 text-2xl font-semibold ">
+                <div aria-hidden="true" className="mt-2 mb-5 text-2xl font-semibold truncate">
                     {name.description}
-                </p>
+                </div>
 
                 <div className='flex justify-between border-solid border-2 border-grey500 rounded-md p-2'>
                     <p>7 Tools</p>

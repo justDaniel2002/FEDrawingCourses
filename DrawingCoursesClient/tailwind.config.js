@@ -19,7 +19,14 @@ export default {
       'offwhite': ' #FDFDFD',
       'offblack' :'#333333',
       'red' : '#FF605C',
-      'buttonBlue':'#4287f5'
+      'buttonBlue':'#4287f5',
+      'starYellow': '#ffeb57',
+      '#04a3b8':'#04a3b8',
+      '#8ce9f5':'#8ce9f5',
+      '#7eb8bf':'#7eb8bf',
+      '#ffc640':'#ffc640',
+      '#f2aa00':'#f2aa00',
+      '#f2ca00':'#f2ca00'
     },
     fontFamily: {
       'inter': ['Inter', "sans-serif"]

@@ -22,7 +22,6 @@ import Registerdialog from "./pages/registration/Registerdialog";
 import { RegisterAction } from "./pages/registration/RegisterAction";
 import Cart from "./pages/cart/cart";
 import MyCourses from "./pages/MyCourses/myCourses";
-import { StudyingCourses } from "./pages/StudyingCourse/StudyingCourse";
 import { Profile } from "./pages/Profile/Profile";
 import Admin from "./pages/admin/page";
 import { MentorPage } from "./pages/mentorPage/MentorPage";
@@ -31,6 +30,9 @@ import { useRecoilState } from "recoil";
 import { accountState } from "./atom/accountState";
 import { getTitem } from "./utils/localStorageExtension";
 import { useEffect } from "react";
+import StudyingCoursesPage from "./pages/StudyingCourse/page";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [account, setAccount] = useRecoilState(accountState);
@@ -67,12 +69,16 @@ function App() {
           <Route path="cart" element={<Cart />} />
           {/* <Route path="ToolDetail" element={<ToolDetail />} /> */}
           <Route path="MyCourses" element={<MyCourses />} />
-          <Route
-            path="StudyingCourse/:courseId"
-            element={<StudyingCourses />}
-          />
+          
           <Route path="Mentor" element={<Mentor />} />
+          
         </Route>
+
+        <Route
+            path="StudyingCourse/:courseId"
+            element={<><Navbar/><StudyingCoursesPage /><Footer /></>}
+          />
+        
 
         <Route path="/Profile" element={<Profile />} />
         <Route path="/MentorPage" element={<MentorPage />} />

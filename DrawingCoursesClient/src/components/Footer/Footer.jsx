@@ -30,8 +30,8 @@ const products = [
 
 const Footer = () => {
   return (
-    <div className="bg-bgpurple -mt-64" id="first-section">
-      <div className="mx-auto max-w-2xl pt-64 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+    <div className="bg-bgpurple" id="first-section">
+      <div className="mx-auto max-w-2xl pt-1 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="mt-24 grid grid-cols-1 gap-y-10 gap-x-16 sm:grid-cols-2 lg:grid-cols-12 xl:gap-x-8">
           {/* COLUMN-1 */}
 

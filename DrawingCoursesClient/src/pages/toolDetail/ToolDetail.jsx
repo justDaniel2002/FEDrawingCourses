@@ -11,6 +11,7 @@ const ToolDetail = () => {
   const [toolCart, setToolCart] = useRecoilState(toolCartState);
   const [tool, setTool] = useState();
   const [quantity, setQuantity] = useState(1);
+  
 
   const navigate = useNavigate();
 

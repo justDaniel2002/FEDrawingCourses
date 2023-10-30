@@ -51,29 +51,6 @@ const CourseDetail = () => {
     }
   };
 
-  const submitComment = async (event) => {
-    event.preventDefault(); // Prevent the form from actually submitting
-
-    // Get the form element from the event target
-    const form = event.target;
-    const comment = form.elements.comment.value;
-    if (comment.length > 0) {
-      const data = {
-        user: {
-          username: account.sub,
-        },
-        courseId: id,
-        comment: comment,
-      };
-
-      const result = await api.postComment(data);
-      if (result == "Comment added successfully") {
-        const getCourse = await api.getCourseById(id);
-        setCourse(getCourse);
-        document.querySelector("input[name='comment']").value = "";
-      }
-    }
-  };
 
   const RatingIcon = () => (
     <span className="text-starYellow">
@@ -123,52 +100,6 @@ const CourseDetail = () => {
           >
             {course?.level}
           </p>
-
-          {/* counter */}
-          {/* <div className="custom-number-input h-10 w-32 my-10">
-          <label
-            for="custom-input-number"
-            className="w-full text-gray-700 text-sm font-semibold"
-          >
-            Quantity
-          </label>
-          <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-            <button
-              onClick={() => {
-                if (quantity > 1) {
-                  setQuantity(quantity - 1);
-                }
-              }}
-              data-action="decrement"
-              className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none"
-            >
-              <span class="m-auto text-2xl font-thin">−</span>
-            </button>
-            <input
-              onChange={(event) => {
-                if (event.target.value > 0 && event.target.value < 100) {
-                  setQuantity(event.target.value);
-                }
-              }}
-              type="number"
-              max={99}
-              className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700"
-              name="custom-input-number"
-              value={quantity}
-            ></input>
-            <button
-              onClick={() => {
-                if (quantity < 99) {
-                  setQuantity(quantity - 1 + 2);
-                }
-              }}
-              data-action="increment"
-              className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer"
-            >
-              <span className="m-auto text-2xl font-thin">+</span>
-            </button>
-          </div>
-        </div> */}
           <br />
           {account?.sub ? (
             <button

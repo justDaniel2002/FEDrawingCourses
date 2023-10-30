@@ -159,8 +159,20 @@ export const getCourseCategory = async () => {
   return res.data;
 };
 
+export const getTooleCategory = async () => {
+  const res = await axios.get(`http://localhost:8080/itemcategory`);
+  console.log(res);
+  return res.data;
+};
+
 export const searchCourse = async (title) => {
   const res = await axios.get(`http://localhost:8080/courses/search?title=${title}`);
+  console.log(res);
+  return res.data;
+};
+
+export const searchTool = async (name) => {
+  const res = await axios.get(`http://localhost:8080/items/search?name=${name}`);
   console.log(res);
   return res.data;
 };
@@ -182,5 +194,7 @@ export const api = {
   changePassword,
   changeAccountInfo,
   getCourseCategory,
-  searchCourse
+  searchCourse,
+  searchTool,
+  getTooleCategory
 };

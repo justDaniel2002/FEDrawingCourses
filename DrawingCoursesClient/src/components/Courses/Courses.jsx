@@ -68,11 +68,11 @@ const Tabs = () => {
           </div>
         </div>
         <div aria-hidden="true" className="mt-2 mb-5 font-normal truncate">
-          Created By: {name.user.username}
+          Created By: {name.user.name}
         </div>
 
         <div className="flex justify-between border-solid border-2 border-grey500 rounded-md p-2">
-          <p>12 Classes</p>
+          <p>{name.createdDate}</p>
           <div className="flex flex-row space-x-4">
             <div className="flex">
               <img src={"/assets/courses/account.svg"} alt="circle" />

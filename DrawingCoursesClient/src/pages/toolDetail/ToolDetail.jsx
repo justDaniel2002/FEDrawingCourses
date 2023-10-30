@@ -11,7 +11,7 @@ const ToolDetail = () => {
   const [toolCart, setToolCart] = useRecoilState(toolCartState);
   const [tool, setTool] = useState();
   const [quantity, setQuantity] = useState(1);
-  
+  const [relateTool, setRelateTool] = useState([]);
 
   const navigate = useNavigate();
 
@@ -19,6 +19,11 @@ const ToolDetail = () => {
     const callback = async () => {
       const getTool = await api.getToolById(id);
       setTool(getTool);
+      const tools = await api.getTools();
+      const relateTools = tools.filter(
+        (tool) => tool.category.id === getTool.category.id
+      );
+      setRelateTool(relateTools);
     };
 
     callback();
@@ -142,6 +147,60 @@ const ToolDetail = () => {
         </button>
         <div className="">{tool?.description}</div>
       </div>
+
+      <div className="text-4xl text-center font-bold my-10">
+          Related Tools
+        </div>
+      <div className="flex justify-center">
+          {relateTool.slice(0, 4).map((name, index) => (
+            <div
+              onClick={() => {
+                setTool(name);
+                window.scrollTo(0, 0);
+              }}
+              className="block w-1/4 px-3"
+              key={index}
+            >
+              <div className=" text-lg sm:text-sm py-5 lg:py-0">
+                <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                  <img
+                    src={name.img}
+                    alt={name.name}
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
+                <div className="flex justify-between">
+                  <div className="mt-6 block font-normal text-gray-900 truncate">
+                    {name.name}
+                  </div>
+                  <div className="mt-6 block text-lg font-semibold text-green border-solid border-2 border-green rounded-md px-1">
+                  ${name.price}
+                  </div>
+                </div>
+                <p
+                  aria-hidden="true"
+                  className="mt-2 mb-5 text-2xl font-semibold truncate"
+                >
+                  {name.name}
+                </p>
+
+                {/* <div className="flex justify-between border-solid border-2 border-grey500 rounded-md p-2">
+                  <p>12 Classes</p>
+                  <div className="flex flex-row space-x-4">
+                    <div className="flex">
+                      <img src={"/assets/courses/account.svg"} alt="circle" />
+                      <p className="text-lightgrey ml-1">120</p>
+                    </div>
+                    <div className="flex">
+                      <img src={"/assets/courses/Star.svg"} alt="star" />
+                      <p className="ml-1">{name.rating}</p>
+                    </div>
+                  </div>
+                </div> */}
+              </div>
+            </div>
+          ))}
+        </div>
     </>
   );
 };

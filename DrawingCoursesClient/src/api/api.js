@@ -159,6 +159,12 @@ export const getCourseCategory = async () => {
   return res.data;
 };
 
+export const searchCourse = async (title) => {
+  const res = await axios.get(`http://localhost:8080/courses/search?title=${title}`);
+  console.log(res);
+  return res.data;
+};
+
 export const api = {
   getCourses,
   getMyCourses,
@@ -175,5 +181,6 @@ export const api = {
   getUser,
   changePassword,
   changeAccountInfo,
-  getCourseCategory
+  getCourseCategory,
+  searchCourse
 };

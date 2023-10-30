@@ -7,7 +7,7 @@ import {
   CircleStackIcon,
   CloudIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import { coursesData } from "../../data/data";
 import { api } from "../../api/api";
 import { useRecoilValue } from "recoil";
@@ -27,6 +27,7 @@ const Coursesdialog = () => {
   const [MyCourse, setMyCourse] = useState([]);
   const [selectedButton, setSelectedButton] = useState();
   const [courseCategories, setCourseCategories] = useState([]);
+  const [searchTitle, setSearchTitle] = useState("")
 
   useEffect(() => {
     const callBack = async () => {
@@ -42,10 +43,20 @@ const Coursesdialog = () => {
     callBack();
   }, []);
 
-  let selectedNames = courses.filter(c => c.category.name === selectedButton)
+  let selectedNames = courses.filter((c) => c.category.name === selectedButton);
 
-  if(selectedButton == "All Courses"){
-    selectedNames = courses
+  if (selectedButton == "All Courses") {
+    selectedNames = courses;
+  }
+
+  const submitSearch = async(event) => {
+    event.preventDefault();
+    if(searchTitle?.length>0){
+      const result = await api.searchCourse(searchTitle)
+      setCourses(result)
+    }else{
+      setCourses(await api.getCourses());
+    }
   }
 
   const nameElements = selectedNames.map((name, index) => (
@@ -104,7 +115,24 @@ const Coursesdialog = () => {
       >
         <div className="text-center">
           <h2 className="font-bold text-6xl mt-14">Search Courses</h2>
-          <SearchCourses />
+          <div className="text-center my-20">
+            <Form onSubmit={submitSearch}>
+              <input
+                name="title"
+                className="text-black border-2 border-black rounded-full px-3 py-2"
+                type="text"
+                placeholder="Search Course..."
+                value={searchTitle}
+                onChange={(event) => setSearchTitle(event.target.value)}
+              />
+              <button
+                className="bg-black text-white rounded-full px-3 py-2 hover:bg-black/60"
+                type="submit"
+              >
+                Search
+              </button>
+            </Form>
+          </div>
         </div>
 
         <div
@@ -141,20 +169,21 @@ const Coursesdialog = () => {
           >
             All Courses
           </button>
-          {courseCategories?.map(category => <button
-            onClick={() => setSelectedButton(category.name)}
-            className={
-              "bg-white " +
-              (selectedButton === category.name
-                ? "text-black border-b-2 border-orange"
-                : "text-lightgrey") +
-              " pb-2 text-lg hidden sm:block"
-            }
-            style={{ textAlign: "left" }}
-          >
-            {category.name}
-          </button>)}
-          
+          {courseCategories?.map((category) => (
+            <button
+              onClick={() => setSelectedButton(category.name)}
+              className={
+                "bg-white " +
+                (selectedButton === category.name
+                  ? "text-black border-b-2 border-orange"
+                  : "text-lightgrey") +
+                " pb-2 text-lg hidden sm:block"
+              }
+              style={{ textAlign: "left" }}
+            >
+              {category.name}
+            </button>
+          ))}
           {/* <button
             onClick={() => setSelectedButton("Beginner Courses")}
             className={

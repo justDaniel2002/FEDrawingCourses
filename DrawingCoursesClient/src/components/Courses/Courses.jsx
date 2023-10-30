@@ -23,39 +23,27 @@ import { accountState } from "../../atom/accountState";
 const Tabs = () => {
   const account = useRecoilValue(accountState);
   const [courses, setCourses] = useState([]);
-  const [selectedButton, setSelectedButton] = useState("Beginner Courses");
+  const [selectedButton, setSelectedButton] = useState();
   const [MyCourse, setMyCourse] = useState([]);
+  const [courseCategories, setCourseCategories] = useState([])
 
-  const BeginnerCourses = courses.filter(
-    (course) => course.level === "BEGINNER"
-  );
-  const IntermediateCourses = courses.filter(
-    (course) => course.level === "INTERMEDIATE"
-  );
-  const UpperIntermediateCourses = courses.filter(
-    (course) => course.level === "ADVANCED"
-  );
+  
 
   useEffect(() => {
     const callBack = async () => {
       const getCourses = await api.getCourses();
       setCourses(getCourses);
-      const getMyCourses = await api.getMyCourses(account.sub);
+      const getMyCourses = await api.getMyCourses(account?.sub);
       setMyCourse(getMyCourses);
+      const categories = await api.getCourseCategory()
+      setCourseCategories(categories)
+      setSelectedButton(categories[0].name)
     };
 
     callBack();
   }, []);
 
-  let selectedNames = [];
-
-  if (selectedButton === "Beginner Courses") {
-    selectedNames = BeginnerCourses;
-  } else if (selectedButton === "Intermediate Courses") {
-    selectedNames = IntermediateCourses;
-  } else if (selectedButton === "Upper-intermediate Courses") {
-    selectedNames = UpperIntermediateCourses;
-  }
+  let selectedNames = courses.filter(c => c.category.name === selectedButton)
 
   const nameElements = selectedNames.map((name, index) => (
     <Link to={`Course/${name.id}`} className="block" key={index}>
@@ -67,8 +55,8 @@ const Tabs = () => {
             className="h-full w-full object-cover object-center"
           />
         </div>
-        <div className="flex justify-between">
-          <div className="mt-6 block font-normal text-gray-900 truncate">
+        <div className="flex justify-between items-center">
+          <div className="mt-6 text-2xl font-semibold text-gray-900 truncate">
             {name.title}
           </div>
           <div className="mt-6 block text-lg font-semibold text-green border-solid border-2 border-green rounded-md px-1">
@@ -79,12 +67,9 @@ const Tabs = () => {
             )}
           </div>
         </div>
-        <p
-          aria-hidden="true"
-          className="mt-2 mb-5 text-2xl font-semibold truncate"
-        >
-          {name.description}
-        </p>
+        <div aria-hidden="true" className="mt-2 mb-5 font-normal truncate">
+          Created By: {name.user.username}
+        </div>
 
         <div className="flex justify-between border-solid border-2 border-grey500 rounded-md p-2">
           <p>12 Classes</p>
@@ -105,7 +90,6 @@ const Tabs = () => {
 
   return (
     <div>
-      {console.log("courses", courses)}
       {/* mx-auto max-w-2xl py-16 px-4 sm:py-36 sm:px-6 lg:max-w-7xl lg:px-8 */}
       <div
         id="courses-section"
@@ -128,7 +112,19 @@ const Tabs = () => {
 
         <div className="flex nowhitespace space-x-5 rounded-xl bg-white p-1 overflow-x-auto">
           {/* FOR DESKTOP VIEW */}
-          <button
+          {courseCategories?.map(category => <button
+            onClick={() => setSelectedButton(category.name)}
+            className={
+              "bg-white " +
+              (selectedButton === category.name
+                ? "text-black border-b-2 border-orange"
+                : "text-lightgrey") +
+              " pb-2 text-lg hidden sm:block"
+            }
+          >
+            {category.name}
+          </button>)}
+          {/* <button
             onClick={() => setSelectedButton("Beginner Courses")}
             className={
               "bg-white " +
@@ -140,7 +136,6 @@ const Tabs = () => {
           >
             Beginner Courses
           </button>
-          {/* <button onClick={() => setSelectedButton('Elementary Courses')} className={"bg-white " + (selectedButton === 'Elementary Courses' ? 'text-black border-b-2 border-orange' : 'text-lightgrey') + " pb-2 text-lg hidden sm:block"}>Elementary Courses</button> */}
           <button
             onClick={() => setSelectedButton("Intermediate Courses")}
             className={
@@ -164,7 +159,7 @@ const Tabs = () => {
             }
           >
             Advanced Courses
-          </button>
+          </button> */}
 
           {/* FOR MOBILE VIEW */}
           <GlobeAltIcon

@@ -58,12 +58,10 @@ export const StudyingCourses = () => {
                 Tổng quan
               </div>
               <div className="px-5">
-                <div className="font-medium">Khóa</div>
-                <div>{Course?.title}</div>
-                <div className="font-medium">Mô tả</div>
+                <div className="font-medium mb-3">Khóa: {Course?.title}</div>
+                <div className="font-medium mb-3">Độ khó: {Course?.level}</div>
+                <div className="font-medium">Mô tả: </div>
                 <div>{Course?.description}</div>
-                <div className="font-medium">Độ khó</div>
-                <div>{Course?.level}</div>
               </div>
             </div>
           </div>
@@ -90,10 +88,14 @@ export const StudyingCourses = () => {
             {account?.sub ? (
               <Form method="post" onSubmit={(event) => submitComment(event)}>
                 <div className="text-xl w-1/5 font-bold mb-2 ml-1 flex items-center">
-                  <img
-                    className="w-1/5 mr-3"
-                    src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
-                  />
+                  {account.img ? (
+                    <img className="w-10 mr-3 rounded-full" src={account.img} />
+                  ) : (
+                    <img
+                      className="w-10 mr-3"
+                      src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
+                    />
+                  )}
                   {account?.sub}
                 </div>
                 <input
@@ -113,10 +115,17 @@ export const StudyingCourses = () => {
           {Course?.comments?.map((comment) => (
             <div className="mb-5">
               <div className="text-xl font-bold flex items-center mb-3">
-                <img
-                  className="w-10 mr-3"
-                  src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
-                />
+                {comment.user.img ? (
+                  <img
+                    className="w-10 mr-3 rounded-full"
+                    src={comment.user.img}
+                  />
+                ) : (
+                  <img
+                    className="w-10 mr-3"
+                    src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
+                  />
+                )}
                 {comment.user.name}
               </div>
               <div className="ml-1">{comment.comment}</div>

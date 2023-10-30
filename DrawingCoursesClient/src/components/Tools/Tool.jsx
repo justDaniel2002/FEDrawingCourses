@@ -55,7 +55,7 @@ const Tool = () => {
                     />
                 </div>
                 <div className='flex justify-between'>
-                    <div className="mt-6 block font-normal text-gray-900">
+                    <div className="mt-6 block font-normal text-gray-900 truncate">
                         {name.name}
                     </div>
                     <div className="mt-6 block text-lg font-semibold text-green border-solid border-2 border-green rounded-md px-1">
@@ -63,7 +63,7 @@ const Tool = () => {
                     </div>
                 </div>
                 <div aria-hidden="true" className="mt-2 mb-5 text-2xl font-semibold truncate">
-                    {name.description}
+                    {name.name}
                 </div>
 
                 <div className='flex justify-between border-solid border-2 border-grey500 rounded-md p-2'>

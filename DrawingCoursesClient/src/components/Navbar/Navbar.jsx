@@ -80,10 +80,7 @@ const Navbar = () => {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className={classNames(
-                        item.current ? " text-purple" : "hover:text-purple",
-                        "px-3 py-4 text-15px font-medium space-links"
-                      )}
+                      className="hover:text-purple px-3 py-4 text-15px font-medium space-links whitespace-nowrap"
                       aria-current={item.href ? "page" : undefined}
                     >
                       {item.name}
@@ -93,7 +90,7 @@ const Navbar = () => {
                   {account?.sub ? (
                     <Link
                       to={"/MyCourses"}
-                      className="hover:text-purple px-3 py-4 text-15px font-medium space-links"
+                      className="hover:text-purple px-3 py-4 text-15px font-medium space-links whitespace-nowrap"
                       aria-current="page"
                     >
                       MyCourses
@@ -134,34 +131,41 @@ const Navbar = () => {
                           <div onMouseEnter={unhidden} className="text-sky-600">
                             {" "}
                             <div className="flex items-center">
-                              <img
-                                className="w-10 mr-3"
-                                src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
-                              />
+                              {account?.img ? (
+                                <img className="w-10 mr-3" src={account?.img} />
+                              ) : (
+                                <img
+                                  className="w-10 mr-3"
+                                  src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
+                                />
+                              )}
+
                               {account?.sub}
                               <div
-                            className="text-red-500 w-28 ml-3"
-                            onClick={() => {
-                              localStorage.clear();
-                              setAccount(undefined);
-                              navigate("/auth/login");
-                            }}
-                          >
-                            Sign Out
-                          </div>
+                                className="text-red-500 w-28 ml-3"
+                                onClick={() => {
+                                  localStorage.clear();
+                                  setAccount(undefined);
+                                  navigate("/auth/login");
+                                }}
+                              >
+                                Sign Out
+                              </div>
                             </div>
-
-                            
                             <div
                               id="accountMenu"
                               onMouseLeave={(event) => hidden(event)}
                               className="hidden absolute border border-grey500 bg-white rounded-xl w-56 -right-14"
                             >
                               <div className="px-5 py-3 flex items-center">
+                                {account?.img ? (
+                                <img className="w-1/3 mr-1 rounded-full" src={account?.img} />
+                              ) : (
                                 <img
                                   className="w-1/3 mr-1"
-                                  src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
+                                  src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
                                 />
+                              )}
                                 <div className="2/3 overflow-hidden">
                                   <div className="font-semibold">
                                     {account?.sub}
@@ -183,7 +187,6 @@ const Navbar = () => {
                               </Link>
                             </div>
                           </div>
-                          
                         </>
                       ) : (
                         <button

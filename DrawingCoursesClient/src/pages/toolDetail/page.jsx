@@ -2,7 +2,7 @@ import ToolDetailDialog from './ToolDetail';
 
 export default function ToolDetail() {
   return (
-    <main className='mb-40'> 
+    <main className='my-20'> 
       <ToolDetailDialog />
     </main>
   )

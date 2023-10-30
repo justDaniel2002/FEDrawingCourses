@@ -109,8 +109,8 @@ const Cart = () => {
     );
     console.log(result);
     if (result && result.length > 0) {
-      setTitem("cartCourse", courseCart)
-      setTitem("cartTool", toolCart)
+      setTitem("cartCourse", courseCart);
+      setTitem("cartTool", toolCart);
       window.open(result, "_blank");
       setToolCart([]);
       setCourseCart([]);
@@ -199,9 +199,15 @@ const Cart = () => {
         >
           <input hidden value={total(rows)} name="ammount" />
           <div className="font-bold text-2xl">Total: {total(rows)}$</div>
-          <button className="p-2 bg-black text-white mt-3 rounded-lg hover:text-black hover:bg-white hover:text-lg transition-all">
-            Check Out
-          </button>
+          {toolCart.length < 1 && courseCart.length < 1 ? (
+            <button disabled className="p-2 bg-black text-white mt-3 rounded-lg transition-all">
+              Check Out
+            </button>
+          ) : (
+            <button className="p-2 bg-black text-white mt-3 rounded-lg hover:text-black hover:bg-white hover:text-lg transition-all">
+              Check Out
+            </button>
+          )}
         </Form>
       </div>
     </main>

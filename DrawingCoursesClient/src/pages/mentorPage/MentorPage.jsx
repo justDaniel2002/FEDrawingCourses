@@ -1,7 +1,47 @@
-import { Link } from "react-router-dom";
-import { coursesData } from "../../data/data";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { api } from "../../api/api";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { accountState } from "../../atom/accountState";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { CreateCourseModal } from "../../components/Modal/CreateCourseModal";
+import { tryGetAccount } from "../../utils/util";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export const MentorPage = () => {
+  const [account, setAccount] = useRecoilState(accountState);
+  const [courses, setCourses] = useState();
+  const [editCourse, setEditCourse] = useState();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = async () => {
+    setOpen(false);
+    const getCourses = await api.getCourseByInstructor(account?.sub);
+    setCourses(getCourses);
+  };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const localAccount = tryGetAccount();
+    setAccount(localAccount);
+    const callBack = async () => {
+      const getCourses = await api.getCourseByInstructor(localAccount?.sub);
+      setCourses(getCourses);
+    };
+    callBack();
+  }, []);
   return (
     <>
       <div className="bg-buttonBlue text-white pt-10 px-20">
@@ -11,8 +51,24 @@ export const MentorPage = () => {
             <button className="p-2 text-buttonBlue bg-white rounded-2xl hover:text-white hover:bg-buttonBlue mr-10">
               Order history
             </button>
-            <button className="p-2 text-buttonBlue bg-white rounded-2xl hover:text-white hover:bg-buttonBlue">
+            <button
+              onClick={() => {
+                setEditCourse(undefined);
+                handleOpen();
+              }}
+              className="p-2 text-buttonBlue bg-white rounded-2xl hover:text-white hover:bg-buttonBlue mr-10"
+            >
               Create a new course
+            </button>
+            <button
+              className="p-2 text-buttonBlue bg-white rounded-2xl hover:text-white hover:bg-buttonBlue"
+              onClick={() => {
+                localStorage.clear();
+                setAccount(undefined);
+                navigate("/auth/login");
+              }}
+            >
+              Sign Out
             </button>
           </div>
         </div>
@@ -37,28 +93,48 @@ export const MentorPage = () => {
       </div>
 
       <div className="my-10 px-60">
-        <input className="p-2 border border-grey500" placeholder="Search course" />
+        <input
+          className="p-2 border border-grey500"
+          placeholder="Search course"
+        />
         <button className="p-2 bg-grey500">Search</button>
       </div>
 
       <div className="px-40">
-        {coursesData.map((course) => (
+        {courses?.map((course) => (
           <>
             <div className="flex mb-10 p-5 border border-grey500 justify-between">
-              <img className="w-1/4 mr-10" src={course.imageSrc} />
+              <img className="w-1/4 mr-10" src={course.img} />
               <div className="mr-10 flex flex-col justify-between">
-                <div className="text-2xl font-semibold">{course.course}</div>
+                <div className="text-2xl font-semibold">{course.title}</div>
                 <div className="text-sm">
-                  {course.profession} - {course.price}$
+                  {course.category.name} - {course.price}$
                 </div>
-                <div className="font-thin mb-5">{course.category}</div>
+                <div className="font-thin mb-5">
+                  Created By: {course.user.name}
+                </div>
                 <div className="text-right">{course.createdDate}</div>
               </div>
               <div className="self-center">
-                <button className="block mb-3 p-2 bg-buttonBlue text-white rounded-xl">
+                <button
+                  onClick={() => {
+                    setEditCourse(course);
+                    handleOpen();
+                  }}
+                  className="block mb-3 p-2 bg-buttonBlue text-white rounded-xl"
+                >
                   Edit
                 </button>
-                <button className="block mb-3 p-2 bg-red text-white rounded-xl">
+                <button
+                  onClick={async () => {
+                    await api.delCourse(course.id, account.token);
+                    const getCourses = await api.getCourseByInstructor(
+                      account?.sub
+                    );
+                    setCourses(getCourses);
+                  }}
+                  className="block mb-3 p-2 bg-red text-white rounded-xl"
+                >
                   Delete
                 </button>
               </div>
@@ -66,6 +142,17 @@ export const MentorPage = () => {
           </>
         ))}
       </div>
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <CreateCourseModal handelclose={handleClose} course={editCourse} />
+        </Box>
+      </Modal>
     </>
   );
 };

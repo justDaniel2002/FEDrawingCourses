@@ -29,7 +29,7 @@ const columns = [
   },
   {
     id: "Price",
-    label: "Size\u00a0($)",
+    label: "Price\u00a0($)",
     minWidth: 170,
     align: "right",
     format: (value) => value + " $",
@@ -111,12 +111,24 @@ const Cart = () => {
     if (result && result.length > 0) {
       setTitem("cartCourse", courseCart);
       setTitem("cartTool", toolCart);
-      window.open(result, "_blank");
+      windowOpen(result)
       setToolCart([]);
       setCourseCart([]);
       toast("check out successfully", { type: toast.TYPE.SUCCESS });
       navigate("/");
     }
+  };
+
+  const windowOpen = (url) => {
+    const newTabWidth = 600; // Set your desired width
+    const newTabHeight = 400; // Set your desired height
+
+    const left = (window.innerWidth - newTabWidth) / 2;
+    const top = (window.innerHeight - newTabHeight) / 2;
+
+    const windowFeatures = `width=${newTabWidth},height=${newTabHeight},left=${left},top=${top}`;
+
+    window.open(url, "_blank", windowFeatures);
   };
   return (
     <main className="mb-40">
@@ -200,7 +212,10 @@ const Cart = () => {
           <input hidden value={total(rows)} name="ammount" />
           <div className="font-bold text-2xl">Total: {total(rows)}$</div>
           {toolCart.length < 1 && courseCart.length < 1 ? (
-            <button disabled className="p-2 bg-black text-white mt-3 rounded-lg transition-all">
+            <button
+              disabled
+              className="p-2 bg-black text-white mt-3 rounded-lg transition-all"
+            >
               Check Out
             </button>
           ) : (

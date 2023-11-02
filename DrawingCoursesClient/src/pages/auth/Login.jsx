@@ -20,7 +20,7 @@ const LoginPage = () => {
       if (data.role === "ROLE_ADMIN") {
         navigae("/admin");
       } else if(data.role === "ROLE_INSTRUCTOR"){
-        navigae("/MentorPage");
+        navigae(`/MentorPage`);
       } else{
         navigae("/");
       }

@@ -1,5 +1,9 @@
 // MENTORS DATA
 
+import { useEffect, useState } from "react";
+import { api } from "../../api/api";
+import { Link } from "react-router-dom";
+
 
 
 const products = [
@@ -54,6 +58,16 @@ const products = [
 ]
 
 const Mentor = () => {
+    const [mentors, SetMentors] = useState([])
+
+    useEffect(() => {
+        const callback = async () => {
+            const getMentors = await api.getAllInstructor()
+            SetMentors(getMentors)
+            console.log(getMentors)
+        }
+        callback()
+    },[])
     return (
                                                //mx-auto max-w-2xl pb-16 px-4 sm:py-20 sm:px-6 lg:max-w-7xl lg:px-8 
             <div id="mentors-section" className="mx-auto max-w-2xl pb-16 px-4 sm:py-5 sm:px-6 lg:max-w-7xl lg:px-8" style={{marginBottom: '17rem'}}>
@@ -63,12 +77,12 @@ const Mentor = () => {
                 </div>
 
                 <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                    {products.map((product) => (
-                        <div key={product.id} className="group relative">
+                    {mentors.map((product) => (
+                        <div key={`/Mentor/${product.username}`} className="group relative">
                             <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-80">
                                 <img
-                                    src={product.imageSrc}
-                                    alt={product.imageAlt}
+                                    src={product.img}
+                                    alt={product.img}
                                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                                 />
                             </div>
@@ -76,13 +90,13 @@ const Mentor = () => {
                                 <div>
                                     <div className='border border-white rounded-lg -mt-8 bg-white p-2 mentorShadow'>
                                         <h3 className="text-sm text-gray-700 text-center">
-                                            <a href={product.href}>
+                                            <Link to={`/Mentor/${product.username}`}>
                                                 <span aria-hidden="true" className="absolute inset-0" />
-                                                {product.name}
-                                            </a>
+                                                {product.userRole}
+                                            </Link>
                                         </h3>
                                     </div>
-                                    <p className="mt-3 text-2xl font-semibold text-offblack text-center">{product.color}</p>
+                                    <p className="mt-3 text-2xl font-semibold text-offblack text-center">{product.name}</p>
                                 </div>
                             </div>
                         </div>

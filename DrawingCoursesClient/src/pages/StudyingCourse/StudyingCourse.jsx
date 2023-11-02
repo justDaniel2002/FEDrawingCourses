@@ -65,7 +65,7 @@ export const StudyingCourses = () => {
               </div>
             </div>
           </div>
-          <div className="w-4/12 font-semibold overflow-y-scroll">
+          <div className="w-4/12 font-semibold max-h-screen overflow-y-scroll">
             <div className="py-3 px-10 border-b border-grey500">
               Nội dung khóa học
             </div>

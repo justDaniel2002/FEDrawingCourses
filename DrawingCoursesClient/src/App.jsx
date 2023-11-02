@@ -33,6 +33,11 @@ import { useEffect } from "react";
 import StudyingCoursesPage from "./pages/StudyingCourse/page";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
+import { mentorPageLoader } from "./pages/mentorPage/mentorPageLoader";
+import { MentorDetail } from "./pages/MentorDetail/MentorDetail,";
+import { mentorDetailLoader } from "./pages/MentorDetail/MentorDetailLoader";
+import { orderHistoryLoader } from "./pages/OrderHistory/orderHistoryLoader";
+import OrderHistoryPage from "./pages/OrderHistory/page";
 
 function App() {
   const [account, setAccount] = useRecoilState(accountState);
@@ -59,6 +64,7 @@ function App() {
 
           {/* <Route path="CourseDetail" element={<CoursesDetail />} /> */}
           <Route path="Mentor" element={<Mentor />} />
+          <Route path="Mentor/:username" element={<MentorDetail />} />
           <Route
             path="Registration"
             element={<Registerdialog />}
@@ -69,7 +75,7 @@ function App() {
           <Route path="cart" element={<Cart />} />
           {/* <Route path="ToolDetail" element={<ToolDetail />} /> */}
           <Route path="MyCourses" element={<MyCourses />} />
-          
+          <Route path="OrderHistory/:username" element={<OrderHistoryPage />} loader={orderHistoryLoader}/>
           <Route path="Mentor" element={<Mentor />} />
           
         </Route>

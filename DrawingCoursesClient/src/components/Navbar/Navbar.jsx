@@ -20,8 +20,6 @@ const navigation = [
   { name: "Courses", href: "/Course", current: false },
   { name: "Tools", href: "/Tool", current: false },
   { name: "Mentors", href: "/Mentor", current: false },
-  { name: "Review", href: "", current: false },
-  { name: "Join", href: "#join-section", current: false },
 ];
 
 function classNames(...classes) {
@@ -88,6 +86,7 @@ const Navbar = () => {
                   ))}
                   <Contactus />
                   {account?.sub ? (
+                    <>
                     <Link
                       to={"/MyCourses"}
                       className="hover:text-purple px-3 py-4 text-15px font-medium space-links whitespace-nowrap"
@@ -95,6 +94,14 @@ const Navbar = () => {
                     >
                       MyCourses
                     </Link>
+                    <Link
+                    to={`/OrderHistory/${account.sub}`}
+                    className="hover:text-purple px-3 py-4 text-15px font-medium space-links whitespace-nowrap"
+                    aria-current="page"
+                  >
+                    OrderHistory
+                  </Link>
+                  </>
                   ) : (
                     ""
                   )}

@@ -38,7 +38,7 @@ export const CreateCourseModal = ({ handelclose, course }) => {
     if (course) {
       await api.editCourse(data, account.token);
 
-      if (data.image) {
+      if (data.image.name.length > 0) {
         await api.postCourseImage(imageFormData, data.id);
       }
     } else {

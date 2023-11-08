@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { CreateCourseModal } from "../../components/Modal/CreateCourseModal";
 import { tryGetAccount } from "../../utils/util";
+import { LessionsModal } from "../../components/Modal/LessionsModal";
 
 const style = {
   position: "absolute",
@@ -24,10 +25,14 @@ export const MentorPage = () => {
   const [account, setAccount] = useRecoilState(accountState);
   const [courses, setCourses] = useState();
   const [editCourse, setEditCourse] = useState();
+  const [editLession, setEditLession] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openL, setOpenL] = useState(false);
   const handleOpen = () => setOpen(true);
+  const handleOpenL = () => setOpenL(true);
   const handleClose = async () => {
     setOpen(false);
+    setOpenL(false)
     const getCourses = await api.getCourseByInstructor(account?.sub);
     setCourses(getCourses);
   };
@@ -125,6 +130,19 @@ export const MentorPage = () => {
                 >
                   Edit
                 </button>
+
+                <button
+                  onClick={async() => {
+                    const getLesssions = await api.getCourseDetails(course.id)
+                    setEditLession(getLesssions);
+                    setEditCourse(course);
+                    handleOpenL();
+                  }}
+                  className="block mb-3 p-2 bg-buttonBlue text-white rounded-xl"
+                >
+                  Detail
+                </button>
+
                 <button
                   onClick={async () => {
                     await api.delCourse(course.id, account.token);
@@ -151,6 +169,17 @@ export const MentorPage = () => {
       >
         <Box sx={style}>
           <CreateCourseModal handelclose={handleClose} course={editCourse} />
+        </Box>
+      </Modal>
+
+      <Modal
+        open={openL}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <LessionsModal handelClose={handleClose} LessionsState={editLession} courseId={editCourse?.id} />
         </Box>
       </Modal>
     </>

@@ -30,11 +30,11 @@ const Sidebar = ({ children }) => {
               <HiOutlineShoppingBag size={20} />
             </div>
           </Link>
-          <Link to='/admin'>
+          {/* <Link to='/admin'>
             <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block'>
               <FiSettings size={20} />
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
       <main className='ml-20 w-full'>{children}</main>

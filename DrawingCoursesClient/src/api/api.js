@@ -113,8 +113,24 @@ export const orderCourse = async (data) => {
   return res.data;
 };
 
+export const getOrderCourse = async (token) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+  const res = await axios.get(`http://localhost:8080/ordercourses`);
+  console.log(res);
+  return res.data;
+};
+
 export const orderTool = async (data) => {
   const res = await axios.post(`http://localhost:8080/orderitems`, data);
+  console.log(res);
+  return res.data;
+};
+
+export const getOrderTool = async (token) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+  const res = await axios.get(`http://localhost:8080/orderitems`);
   console.log(res);
   return res.data;
 };
@@ -188,6 +204,14 @@ export const getUser = async (username) => {
   return res.data;
 };
 
+export const getAllUser = async (token) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+  const res = await axios.get(`http://localhost:8080/users`);
+  console.log(res);
+  return res.data;
+};
+
 export const getAllInstructor = async () => {
   const res = await axios.get(`http://localhost:8080/users/instructor`);
   console.log(res);
@@ -253,6 +277,18 @@ export const editCourse = async (data, token) => {
   return res.data;
 };
 
+export const editCourseDetail = async (data, token) => {
+  console.log("data", data);
+  console.log("token", token);
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+  const res = await axios
+    .post(`http://localhost:8080/coursedetail/list`, data)
+    .catch((err) => toast(err.message, { type: toast.TYPE.ERROR }));
+  console.log(res);
+  return res.data;
+};
+
 export const getOrderHistory = async(username) => {
   const res = await axios.get(`http://localhost:8080/ordercourses/history/${username}`)
   console.log(res);
@@ -280,6 +316,9 @@ export const api = {
   getTooleCategory,
   getOrderHistory,
   getOrderToolHistory,
+  getOrderCourse,
+  getOrderTool,
+  getAllUser, 
   
   postPayment,
   postComment,
@@ -297,6 +336,7 @@ export const api = {
   searchTool,
 
   editCourse,
+  editCourseDetail,
 
   delCourse,
 };

@@ -1,8 +1,9 @@
 import { atom } from "recoil";
+import { tryGetAccount } from "../utils/util";
 
 export const accountState = atom({
     key: "account",
-    default: undefined
+    default: tryGetAccount()
 })
 
 export const toolCartState = atom({

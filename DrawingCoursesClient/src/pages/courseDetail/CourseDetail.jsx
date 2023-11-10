@@ -142,6 +142,7 @@ const CourseDetail = () => {
               {comment.user.name}
             </div>
             <div className="ml-1">{comment.comment}</div>
+            <div className="ml-1">{printRating(comment?.rating)}</div>
           </div>
         ))}
         <div className="text-4xl text-center font-bold my-10">

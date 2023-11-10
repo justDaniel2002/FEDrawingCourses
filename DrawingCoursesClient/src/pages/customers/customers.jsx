@@ -26,6 +26,7 @@ const Customers = () => {
             <span>Name</span>
             <span className='sm:text-left text-right'>Email</span>
             <span className='hidden sm:grid'>Address</span>
+            <span className='hidden sm:grid'>Role</span>
           </div>
           <ul>
             {Customers.map((cus, id) => (
@@ -38,6 +39,7 @@ const Customers = () => {
                     </div>
                     <p className='text-gray-600 sm:text-left text-right'>{cus.username}</p>
                     <p className='hidden md:flex'>{cus.address}</p>
+                    <p className='hidden md:flex'>{cus.userRole}</p>
                     {/* <div className='sm:flex hidden justify-between items-center'>
                         <p>{order.method}</p>
                         <BsThreeDotsVertical />

@@ -23,11 +23,11 @@ const BarChart = ({ order }) => {
   const [chartOptions, setChartOptions] = useState({});
   const datasetOrder = order?.slice(0, 7);
   const chartData = {
-    labels: datasetOrder.map((data) => data.orderDate),
+    labels: datasetOrder.map((data) => data.month+"-"+data.year),
     datasets: [
       {
         label: "Sales $",
-        data: datasetOrder.map((data) => data.total),
+        data: datasetOrder.map((data) => data.revenue),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgb(53, 162, 235, 0.4",
       },

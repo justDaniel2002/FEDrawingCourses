@@ -121,6 +121,14 @@ export const getOrderCourse = async (token) => {
   return res.data;
 };
 
+export const getMonthlyOrderCourse = async (token) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+  const res = await axios.get(`http://localhost:8080/ordercourses/monthly`);
+  console.log(res);
+  return res.data;
+};
+
 export const orderTool = async (data) => {
   const res = await axios.post(`http://localhost:8080/orderitems`, data);
   console.log(res);
@@ -134,6 +142,15 @@ export const getOrderTool = async (token) => {
   console.log(res);
   return res.data;
 };
+
+export const getMonthlyOrderTool = async (token) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+  const res = await axios.get(`http://localhost:8080/orderitems/monthly`);
+  console.log(res);
+  return res.data;
+};
+
 
 export const getCourseByCategory = async (id) => {
   {
@@ -319,6 +336,8 @@ export const api = {
   getOrderCourse,
   getOrderTool,
   getAllUser, 
+  getMonthlyOrderCourse,
+  getMonthlyOrderTool,
   
   postPayment,
   postComment,

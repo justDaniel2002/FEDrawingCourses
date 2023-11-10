@@ -40,8 +40,8 @@ Warm regards,
 ${mentor.name}`}</div>
             <div className="font-medium">My Courses {`(${courses.length})`}</div>
             <div className="flex w-full">
-              <img className="w-full mr-3" src={courses[0].img} />
-              <img className="w-full" src={courses[1].img} />
+              <img className="w-1/2 mr-3" src={courses[0].img} />
+              <img className="w-1/2" src={courses[1].img} />
             </div>
           </div>
           <div className="w-1/3 px-16">

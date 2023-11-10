@@ -64,7 +64,7 @@ function App() {
 
           {/* <Route path="CourseDetail" element={<CoursesDetail />} /> */}
           <Route path="Mentor" element={<Mentor />} />
-          <Route path="Mentor/:username" element={<MentorDetail />} />
+          <Route path="Mentor/:username" element={<MentorDetail />} loader={mentorDetailLoader}/>
           <Route
             path="Registration"
             element={<Registerdialog />}

@@ -129,6 +129,7 @@ export const StudyingCourses = () => {
                 {comment.user.name}
               </div>
               <div className="ml-1">{comment.comment}</div>
+              <div className="ml-1">{printRating(comment?.rating)}</div>
             </div>
           ))}
         </div>

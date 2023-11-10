@@ -115,9 +115,9 @@ export const MentorPage = () => {
                 <div className="text-sm">
                   {course.category.name} - {course.price}$
                 </div>
-                <div className="font-thin mb-5">
+                {/* <div className="font-thin mb-5">
                   Created By: {course.user.name}
-                </div>
+                </div> */}
                 <div className="text-right">{course.createdDate}</div>
               </div>
               <div className="self-center">

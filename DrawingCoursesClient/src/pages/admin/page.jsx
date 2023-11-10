@@ -12,11 +12,15 @@ export default function Admin() {
   const [Revenue, setRevenue] = useState(0)
   const [Customers, setCustomers] = useState([])
   const [Order, setOrder] = useState([])
+  const [MOrder, setMOrder] = useState([])
 
   const callback = async() => {
     const OrdersCourse = await api.getOrderCourse(account.token)
     const OrderTool = await api.getOrderTool(account.token)
     const getCus = await api.getAllUser(account.token)
+
+    const MOrdersCourse = await api.getMonthlyOrderCourse(account.token)
+    const MOrderTool = await api.getMonthlyOrderTool(account.token)
 
     const sum1 = OrdersCourse.reduce((accumulator, currentValue) => {
       return accumulator + currentValue.total;
@@ -27,6 +31,7 @@ export default function Admin() {
     }, 0);
 
     setOrder([...OrdersCourse, ...OrderTool])
+    setMOrder([...MOrdersCourse, ...MOrderTool])
     setCustomers(getCus)
     setRevenue(sum1 + sum2)
   }
@@ -38,7 +43,7 @@ export default function Admin() {
       <main className="bg-gray-100 min-h-screen">
         <TopCards Total={Revenue} NOC={Customers.length} />
         <div className="p-4 grid md:grid-cols-3 grid-cols-1 gap-4">
-          <BarChart order={Order}/>
+          <BarChart order={MOrder}/>
           <RecentOrders order={Order} />
         </div>
       </main>

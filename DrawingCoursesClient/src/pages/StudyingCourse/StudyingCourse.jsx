@@ -4,6 +4,7 @@ import { Form, useParams } from "react-router-dom";
 import { api } from "../../api/api";
 import { useRecoilValue } from "recoil";
 import { accountState } from "../../atom/accountState";
+import StarIcon from "@mui/icons-material/Star";
 
 export const StudyingCourses = () => {
   const [Parts, setParts] = useState([]);
@@ -26,6 +27,20 @@ export const StudyingCourses = () => {
 
     callback();
   }, []);
+
+  const printRating = (n) => {
+    const ratingArray = [];
+    for (let i = 0; i < n; i++) {
+      ratingArray.push(<RatingIcon key={i} />);
+    }
+    return ratingArray;
+  };
+
+  const RatingIcon = () => (
+    <span className="text-starYellow">
+      <StarIcon />
+    </span>
+  );
 
   return (
     <>

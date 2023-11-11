@@ -50,7 +50,7 @@ export const MentorPage = () => {
   return (
     <>
       <div className="bg-buttonBlue text-white pt-10 px-20">
-        <div className="flex justify-between mb-5">
+        <div className="flex justify-between mb-5 pb-14 items-center">
           <div className="text-xl font-light">Instructor Dashboard</div>
           <div className="flex">
             <button className="p-2 text-buttonBlue bg-white rounded-2xl hover:text-white hover:bg-buttonBlue mr-10">
@@ -77,14 +77,14 @@ export const MentorPage = () => {
             </button>
           </div>
         </div>
-        <div className="flex">
+        {/* <div className="flex">
           <Link className="pb-3 mr-20" to={"/"}>
             Courses
           </Link>
           <Link className="pb-3" to={"/"}>
             Review
           </Link>
-        </div>
+        </div> */}
       </div>
       <div className=" py-10 px-20 flex">
         <div className="w-1/4">

@@ -17,9 +17,7 @@ export const Profile = () => {
     const formData = new FormData(event.target);
     const result = await api.postProfileImage(formData, account.sub);
     console.log(result);
-    localStorage.clear();
-    setAccount(undefined);
-    navigate("/auth/login");
+    setAccount({...account, img: result.img});
   };
 
   const submitPassword = async (event) => {
@@ -45,9 +43,7 @@ export const Profile = () => {
     });
     const result = await api.changeAccountInfo(data);
     toast(result, {type: toast.TYPE.INFO})
-    const updateAccount = account
-    updateAccount.address = data.address;
-    setAccount(updateAccount)
+    setAccount({...account, address: data.address});
   };
   return (
     <main>

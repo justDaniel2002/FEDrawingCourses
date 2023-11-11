@@ -11,6 +11,7 @@ export const StudyingCourses = () => {
   const [Parts, setParts] = useState([]);
   const [Ipart, setPart] = useState();
   const [Course, setCourse] = useState();
+  const [R, setR] = useState(5)
   const account = useRecoilValue(accountState);
 
   const { courseId } = useParams();
@@ -26,8 +27,6 @@ export const StudyingCourses = () => {
   };
 
   useEffect(() => {
-    
-
     callback();
   }, []);
 
@@ -39,13 +38,30 @@ export const StudyingCourses = () => {
     return ratingArray;
   };
 
+  const SetRating = (n, setR) => {
+    const ratingArray = [];
+    for (let i = 0; i < n; i++) {
+      ratingArray.push(<span onClick={() => setR(i)} key={i}><RatingIcon /></span>);
+    }
+    for (let i = n-5; i < 0; i++) {
+      ratingArray.push(<span onClick={() => setR(5+i+1)} key={i}><UnRatingIcon /></span>);
+    }
+    return ratingArray;
+  };
+
   const RatingIcon = () => (
     <span className="text-starYellow">
       <StarIcon />
     </span>
   );
 
-  const submitComment = async(event) => {
+  const UnRatingIcon = () => (
+    <span>
+      <StarIcon />
+    </span>
+  );
+
+  const submitComment = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -53,18 +69,18 @@ export const StudyingCourses = () => {
     const res = await api.postComment({
       courseId,
       user: {
-        username: account.sub
+        username: account.sub,
       },
-      comment: formData.get('comment'),
-      rating: 0
-    })
+      comment: formData.get("comment"),
+      rating: R,
+    });
 
     console.log(res);
 
-    toast(res,{type: toast.TYPE.INFO})
+    toast(res, { type: toast.TYPE.INFO });
 
-    await callback()
-  }
+    await callback();
+  };
   return (
     <>
       <div className="flex flex-col">
@@ -145,6 +161,10 @@ export const StudyingCourses = () => {
                 <button className="p-3 rounded-3xl bg-black text-white font-medium hover:bg-white hover:text-black">
                   Comment
                 </button>
+                <div className="flex mt-5 items-center">
+                  <div className="text-lg">Rating: </div>
+                  {SetRating(R, setR)}
+                </div>
               </Form>
             ) : (
               <div>Sign in to comment</div>

@@ -139,7 +139,7 @@ const Navbar = () => {
                             {" "}
                             <div className="flex items-center">
                               {account?.img ? (
-                                <img className="w-10 mr-3" src={account?.img} />
+                                <img className="w-10 mr-3 rounded-full" src={account?.img} />
                               ) : (
                                 <img
                                   className="w-10 mr-3"

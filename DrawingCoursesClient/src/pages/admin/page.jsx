@@ -31,7 +31,7 @@ export default function Admin() {
     }, 0);
 
     setOrder([...OrdersCourse, ...OrderTool])
-    setMOrder([...MOrdersCourse, ...MOrderTool])
+    setMOrder([...MOrdersCourse])
     setCustomers(getCus)
     setRevenue(sum1 + sum2)
   }

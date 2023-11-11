@@ -30,6 +30,18 @@ export const LessionsModal = ({ LessionsState, courseId, handelClose }) => {
     setLessions(updateLessions);
   };
 
+  const editLessionDocument = (index, document) => {
+    const updateLessions = Lessions;
+    updateLessions[index].document = document;
+    setLessions(updateLessions);
+  };
+
+  const editLessionDescription = (index, description) => {
+    const updateLessions = Lessions;
+    updateLessions[index].description = description;
+    setLessions(updateLessions);
+  };
+
   const submit = async (event) => {
     event.preventDefault();
     await api.editCourseDetail(
@@ -65,6 +77,24 @@ export const LessionsModal = ({ LessionsState, courseId, handelClose }) => {
                       editLessionUrl(index, event.target.value)
                     }
                     defaultValue={lession.url}
+                    required
+                    className="p-2 rounded-full border w-full mb-5"
+                  />
+                  <label className="text-sm mb-3">Description</label>
+                  <input
+                    onChange={(event) =>
+                      editLessionDescription(index, event.target.value)
+                    }
+                    defaultValue={lession.description}
+                    required
+                    className="p-2 rounded-full border w-full mb-5"
+                  />
+                  <label className="text-sm mb-3">Document</label>
+                  <input
+                    onChange={(event) =>
+                      editLessionDocument(index, event.target.value)
+                    }
+                    defaultValue={lession.document}
                     required
                     className="p-2 rounded-full border w-full mb-5"
                   />

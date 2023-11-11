@@ -1,7 +1,15 @@
+import { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 
 export const MentorDetail = () => {
   const { mentor, courses } = useLoaderData();
+
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth'
+  });
+  
   return (
     <>
     {console.log(mentor)}

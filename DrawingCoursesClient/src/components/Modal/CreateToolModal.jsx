@@ -4,13 +4,13 @@ import { api } from "../../api/api";
 import { useRecoilValue } from "recoil";
 import { accountState } from "../../atom/accountState";
 
-export const CreateCourseModal = ({ handelclose, course }) => {
+export const CreateToolModal = ({ handelclose, tool }) => {
   const account = useRecoilValue(accountState);
   const [courseCategories, setCourseCategories] = useState([]);
 
   useEffect(() => {
     const callBack = async () => {
-      const categories = await api.getCourseCategory();
+      const categories = await api.getTooleCategory();
       setCourseCategories(categories);
     };
 
@@ -35,16 +35,16 @@ export const CreateCourseModal = ({ handelclose, course }) => {
     const imageFormData = new FormData();
     imageFormData.set("image", data.image);
 
-    if (course) {
-      await api.editCourse(data, account.token);
+    if (tool) {
+      await api.editTool(data, account.token);
 
       if (data.image.name.length > 0) {
-        await api.postCourseImage(imageFormData, data.id);
+        await api.postToolImage(imageFormData, data.id);
       }
     } else {
-      const course = await api.postCourse(data, account.token);
-      if (course&&data.image.name.length > 0) {
-        await api.postCourseImage(imageFormData, course.id);
+      const tool = await api.postTool(data, account.token);
+      if (tool&&data.image.name.length > 0) {
+        await api.postToolImage(imageFormData, tool.id);
       }
     }
     handelclose();
@@ -52,14 +52,14 @@ export const CreateCourseModal = ({ handelclose, course }) => {
   return (
     <>
       <Form onSubmit={submit} method="post" className="w-full">
-        <input name="id" hidden value={course?.id} />
-        <label>Title</label>
+        <input name="id" hidden value={tool?.id} />
+        <label>Name</label>
         <input
-          name="title"
-          placeholder="title"
+          name="name"
+          placeholder="name"
           required
           className="border p-2 rounded-xl w-full mb-3"
-          defaultValue={course?.title}
+          defaultValue={tool?.name}
         />
         <label>Description</label>
         <textarea
@@ -67,7 +67,7 @@ export const CreateCourseModal = ({ handelclose, course }) => {
           className="border h-36 rounded-xl w-full mb-3"
           required
         >
-          {course?.description}
+          {tool?.description}
         </textarea>
         <label>Price</label>
         <input
@@ -76,7 +76,7 @@ export const CreateCourseModal = ({ handelclose, course }) => {
           placeholder="price"
           min={1}
           className="border p-2 rounded-xl w-full mb-3"
-          defaultValue={course?.price}
+          defaultValue={tool?.price}
         />
         <label>Image</label>
         <input
@@ -86,14 +86,6 @@ export const CreateCourseModal = ({ handelclose, course }) => {
           type="file"
         />
         <div className="flex mb-5">
-          <div className="w-1/2 mr-3">
-            <label>Level</label>
-            <select name="level" className="border p-2 rounded-xl w-full">
-              <option value={"BEGINNER"}>BEGINNER</option>
-              <option value={"ADVANCED"}>ADVANCED</option>
-              <option value={"INTERMEDIATE"}>INTERMEDIATE</option>
-            </select>
-          </div>
           <div className="w-1/2">
             <label>Category</label>
             <select name="categoryId" className="border p-2 rounded-xl w-full">
@@ -105,7 +97,7 @@ export const CreateCourseModal = ({ handelclose, course }) => {
         </div>
         <div className="text-right">
           <button className="p-2 rounded-xl bg-buttonBlue text-white">
-            {course ? "Edit Course" : "Create Course"}
+            {tool ? "Edit Tool" : "Create Tool"}
           </button>
         </div>
       </Form>

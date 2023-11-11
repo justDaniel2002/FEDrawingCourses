@@ -5,6 +5,7 @@ import { Form, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { fileToBase64 } from "../../utils/util";
 import { api } from "../../api/api";
+import { toast } from "react-toastify";
 
 export const Profile = () => {
   const [account, setAccount] = useRecoilState(accountState);
@@ -43,10 +44,10 @@ export const Profile = () => {
       data[key] = value;
     });
     const result = await api.changeAccountInfo(data);
-    console.log(result);
-    localStorage.clear();
-    setAccount(undefined);
-    navigate("/auth/login");
+    toast(result, {type: toast.TYPE.INFO})
+    const updateAccount = account
+    updateAccount.address = data.address;
+    setAccount(updateAccount)
   };
   return (
     <main>

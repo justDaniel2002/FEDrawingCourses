@@ -38,6 +38,8 @@ import { MentorDetail } from "./pages/MentorDetail/MentorDetail,";
 import { mentorDetailLoader } from "./pages/MentorDetail/MentorDetailLoader";
 import { orderHistoryLoader } from "./pages/OrderHistory/orderHistoryLoader";
 import OrderHistoryPage from "./pages/OrderHistory/page";
+import ItemsManager from "./pages/itemsManager/ItemsManager";
+import CourseTable from "./pages/courseManager/CourseTable";
 
 function App() {
   const [account, setAccount] = useRecoilState(accountState);
@@ -94,6 +96,8 @@ function App() {
           <Route index element={<Admin />} />
           <Route path="customers" element={<Customers />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="items" element={<ItemsManager />} />
+          <Route path="courses" element={<CourseTable />} />
         </Route>
       </Route>
     ),

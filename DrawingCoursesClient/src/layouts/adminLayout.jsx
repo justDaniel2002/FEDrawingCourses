@@ -5,6 +5,7 @@ import { accountState } from "../atom/accountState";
 
 export default function AdminLayout() {
   const account = useRecoilValue(accountState);
+  window.scrollTo(0, 0);
   return (
     <Sidebar>
       <div className="flex justify-between px-4 pt-4">

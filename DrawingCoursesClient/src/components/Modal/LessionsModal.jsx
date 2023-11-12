@@ -3,6 +3,11 @@ import { api } from "../../api/api";
 import { useRecoilValue } from "recoil";
 import { accountState } from "../../atom/accountState";
 import { useState } from "react";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { totalTimeInSeconds } from "../../utils/util";
 
 export const LessionsModal = ({ LessionsState, courseId, handelClose }) => {
   const account = useRecoilValue(accountState);
@@ -39,6 +44,15 @@ export const LessionsModal = ({ LessionsState, courseId, handelClose }) => {
   const editLessionDescription = (index, description) => {
     const updateLessions = Lessions;
     updateLessions[index].description = description;
+    setLessions(updateLessions);
+  };
+
+  const editLessionTime = (index, estimatedTime) => {
+    console.log(estimatedTime)
+    const long = totalTimeInSeconds(estimatedTime.$m, estimatedTime.$s);
+    console.log(long)
+    const updateLessions = Lessions;
+    updateLessions[index].estimatedTime = long;
     setLessions(updateLessions);
   };
 
@@ -98,6 +112,33 @@ export const LessionsModal = ({ LessionsState, courseId, handelClose }) => {
                     required
                     className="p-2 rounded-full border w-full mb-5"
                   />
+                  <label className="text-sm mb-3">Estimate Time</label>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer
+                      sx={{ marginBottom: 5 }}
+                      components={["MobileTimePicker"]}
+                    >
+                      <DemoItem>
+                        <TimePicker
+                          onChange={(event) =>
+                            editLessionTime(index, event)
+                          }
+                          views={["minutes", "seconds"]}
+                          format="mm:ss"
+                          value={new Date(0, 0, 0, 0, Math.floor(lession.estimatedTime / 60), lession.estimatedTime % 60)}
+                        />
+                      </DemoItem>
+                    </DemoContainer>
+                  </LocalizationProvider>
+                  {/* <input
+                    type="time"
+                    onChange={(event) =>
+                      editLessionDocument(index, event.target.value)
+                    }
+                    defaultValue={lession.document}
+                    required
+                    className="p-2 rounded-full border w-full mb-5"
+                  /> */}
                   <div className="mb-5">
                     <span
                       onClick={() => removeLession(lession)}

@@ -4,6 +4,7 @@ import { Form, useActionData, useSubmit, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Registerdialog = () => {
+  window.scrollTo(0, 0);
   const submit = useSubmit();
 
   const navigate = useNavigate();

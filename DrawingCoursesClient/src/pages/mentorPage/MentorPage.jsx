@@ -22,6 +22,7 @@ const style = {
 };
 
 export const MentorPage = () => {
+  window.scrollTo(0, 0);
   const [account, setAccount] = useRecoilState(accountState);
   const [courses, setCourses] = useState();
   const [editCourse, setEditCourse] = useState();
@@ -86,7 +87,7 @@ export const MentorPage = () => {
           </Link>
         </div> */}
       </div>
-      <div className=" py-10 px-20 flex">
+      {/* <div className=" py-10 px-20 flex">
         <div className="w-1/4">
           Total Revenue
           <div>$0</div>
@@ -95,22 +96,22 @@ export const MentorPage = () => {
           Total Students
           <div>0</div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="my-10 px-60">
+      {/* <div className="my-10 px-60">
         <input
           className="p-2 border border-grey500"
           placeholder="Search course"
         />
         <button className="p-2 bg-grey500">Search</button>
-      </div>
+      </div> */}
 
-      <div className="px-40">
+      <div className="px-40 mt-20">
         {courses?.map((course) => (
           <>
             <div className="flex mb-10 p-5 border border-grey500 justify-between">
               <img className="w-1/4 mr-10" src={course.img} />
-              <div className="mr-10 flex flex-col justify-between">
+              <div className="w-2/4 mr-10 flex flex-col justify-between">
                 <div className="text-2xl font-semibold">{course.title}</div>
                 <div className="text-sm">
                   {course.category.name} - {course.price}$

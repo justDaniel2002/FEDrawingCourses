@@ -78,6 +78,7 @@ function total(db) {
 }
 
 const Cart = () => {
+  window.scrollTo(0, 0);
   const account = useRecoilValue(accountState);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

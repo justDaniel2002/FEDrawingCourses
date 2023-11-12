@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const LoginPage = () => {
   const username = useRef("");
   const password = useRef("");
+  window.scrollTo(0, 0);
 
   const [account, setAccount] = useRecoilState(accountState);
   const data = useActionData();

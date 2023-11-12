@@ -113,6 +113,22 @@ export const orderCourse = async (data) => {
   return res.data;
 };
 
+export const setStatusOrderCourse = async (token, id) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+  const res = await axios.put(`http://localhost:8080/ordercourses/${id}`);
+  console.log(res);
+  return res.data;
+};
+
+export const setStatusOrderItems = async (token, id, order) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+  const res = await axios.put(`http://localhost:8080/orderitems/${id}`, order);
+  console.log(res);
+  return res.data;
+};
+
 export const getOrderCourse = async (token) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
@@ -403,6 +419,8 @@ export const api = {
   editCourse,
   editCourseDetail,
   editTool,
+  setStatusOrderCourse,
+  setStatusOrderItems,
 
   delCourse,
   delTool

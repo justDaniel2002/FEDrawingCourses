@@ -10,6 +10,7 @@ import Tool from "../components/Tools/Tool";
 
 
 export default function Home() {
+  window.scrollTo(0, 0);
   return (
     <main>
       <Banner />

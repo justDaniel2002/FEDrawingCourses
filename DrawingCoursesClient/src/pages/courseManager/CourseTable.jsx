@@ -9,6 +9,7 @@ import { HiTemplate } from "react-icons/hi";
 import { SiCoursera } from "react-icons/si";
 
 const CourseTable = () => {
+  window.scrollTo(0, 0);
   const account = useRecoilValue(accountState);
   const [courses, setCourses] = useState([]);
 

@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { accountState } from '../../atom/accountState.js';
 
 const Customers = () => {
+  window.scrollTo(0, 0);
   const account = useRecoilValue(accountState)
   const [Customers, setCustomers] = useState([])
 

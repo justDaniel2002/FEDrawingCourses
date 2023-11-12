@@ -7,6 +7,7 @@ import { accountState } from "../../atom/accountState";
 import { useEffect } from "react";
 
 export const PaymentSucess = () => {
+  window.scrollTo(0, 0);
   const account = useRecoilValue(accountState)
   const cartCourse = getTitem("cartCourse");
   const cartTool = getTitem("cartTool");
@@ -35,7 +36,7 @@ export const PaymentSucess = () => {
     user:{username: account?.sub},
     total: totalToolCart,
     orderDate: formatDateToDDMMYYYY(new Date()),
-    courses: orderTools,
+    items: orderTools,
     status: "paid",
     paymentMethod: "Paypal"
 
@@ -44,7 +45,7 @@ export const PaymentSucess = () => {
   const order = async () => {
     const resOrderCourse = await api.orderCourse(orderCourseData)
     console.log(resOrderCourse)
-    const resOrderTool = await api.orderCourse(orderToolData)
+    const resOrderTool = await api.orderTool(orderToolData)
     console.log(resOrderTool)
 
     localStorage.removeItem('cartCourse');

@@ -40,3 +40,13 @@ export const tryGetAccount = () => {
   const localAccount = getTitem("account");
   return localAccount;
 };
+
+export function totalTimeInSeconds(minutes, seconds) {
+  // Calculate the total time in seconds and cast it to a long integer
+  const totalTime = (minutes * 60 + seconds);
+
+  // Use BigInt to cast the result to a long integer
+  const longTotalTime = BigInt(totalTime).toString();
+
+  return longTotalTime;
+}

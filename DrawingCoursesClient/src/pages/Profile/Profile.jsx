@@ -8,6 +8,7 @@ import { api } from "../../api/api";
 import { toast } from "react-toastify";
 
 export const Profile = () => {
+  window.scrollTo(0, 0);
   const [account, setAccount] = useRecoilState(accountState);
   const [avatarFile, setAvatarfile] = useState(account.img);
   const navigate = useNavigate();

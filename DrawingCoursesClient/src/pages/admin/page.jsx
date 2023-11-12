@@ -8,6 +8,7 @@ import { accountState } from "../../atom/accountState";
 import { api } from "../../api/api";
 
 export default function Admin() {
+  window.scrollTo(0, 0);
   const account = useRecoilValue(accountState)
   const [Revenue, setRevenue] = useState(0)
   const [Customers, setCustomers] = useState([])

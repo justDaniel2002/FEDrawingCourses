@@ -22,6 +22,7 @@ const style = {
 };
 
 const ItemsManager = () => {
+  window.scrollTo(0, 0);
   const account = useRecoilValue(accountState);
   const [Items, setItems] = useState([]);
   const [open, setOpen] = useState(false);

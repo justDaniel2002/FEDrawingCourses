@@ -25,18 +25,19 @@ const CourseTable = () => {
     <div className="bg-gray-100 min-h-screen">
       <div className="p-4">
         <div className="w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto">
-          <div className="my-3 p-2 grid md:grid-cols-5 sm:grid-cols-5 grid-cols-5 items-center justify-between cursor-pointer gap-3">
+          <div className="my-3 p-2 grid md:grid-cols-6 sm:grid-cols-6 grid-cols-6 items-center justify-between cursor-pointer gap-3">
             <span># Course</span>
             <span className="hidden md:grid">Title</span>
             <span className="hidden sm:grid">Price</span>
             <span className="hidden sm:grid">Category</span>
             <span className="hidden sm:grid">Level</span>
+            <span className="hidden sm:grid">Creator</span>
           </div>
           <ul>
             {courses.map((item, id) => (
               <li
                 key={id}
-                className="bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-5 sm:grid-cols-5 grid-cols-5 items-center justify-between cursor-pointer gap-3"
+                className="bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-6 sm:grid-cols-6 grid-cols-6 items-center justify-between cursor-pointer gap-3"
               >
                 <div className="flex items-center">
                   <div className="bg-purple-100 p-3 rounded-lg">
@@ -64,8 +65,11 @@ const CourseTable = () => {
                 <p className="text-gray-600 sm:text-left text-right">
                   <span>{item.category.name}</span>
                 </p>
-                <div className="sm:flex hidden justify-between items-center">
+                <div className="text-gray-600 sm:text-left text-right">
                   <span>{item.level}</span>
+                </div>
+                <div className="sm:flex hidden justify-between items-center">
+                  <span>{item.user.name}</span>
                   <BsThreeDotsVertical />
                 </div>
               </li>

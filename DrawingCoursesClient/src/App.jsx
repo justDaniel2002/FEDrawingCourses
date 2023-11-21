@@ -40,6 +40,8 @@ import { orderHistoryLoader } from "./pages/OrderHistory/orderHistoryLoader";
 import OrderHistoryPage from "./pages/OrderHistory/page";
 import ItemsManager from "./pages/itemsManager/ItemsManager";
 import CourseTable from "./pages/courseManager/CourseTable";
+import { MentorOHPage } from "./pages/mentorPage/orderHistory/MentorOHPage";
+import { mentorOrderHistoryLoader } from "./pages/mentorPage/orderHistory/MentorOHLoader";
 
 function App() {
   const [account, setAccount] = useRecoilState(accountState);
@@ -100,6 +102,7 @@ function App() {
 
         <Route path="/Profile" element={<Profile />} />
         <Route path="/MentorPage" element={<MentorPage />} />
+        <Route path="/MentorOrderHistoryPage/:username" element={<MentorOHPage />} loader={mentorOrderHistoryLoader}/>
         <Route path="/pay/success" element={<PaymentSucess />} />
 
         <Route path="/admin" element={<AdminLayout />}>

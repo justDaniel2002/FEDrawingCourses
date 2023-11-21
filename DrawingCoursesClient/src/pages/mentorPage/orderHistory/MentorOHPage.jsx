@@ -1,13 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { api } from "../../api/api";
+import { api } from "../../../api/api";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { accountState } from "../../atom/accountState";
+import { accountState } from "../../../atom/accountState";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { CreateCourseModal } from "../../components/Modal/CreateCourseModal";
-import { tryGetAccount } from "../../utils/util";
-import { LessionsModal } from "../../components/Modal/LessionsModal";
+import { CreateCourseModal } from "../../../components/Modal/CreateCourseModal";
+import { tryGetAccount } from "../../../utils/util";
+import { LessionsModal } from "../../../components/Modal/LessionsModal";
+import { MentorOrderHistory } from "./MentorOH";
 
 const style = {
   position: "absolute",
@@ -21,7 +22,7 @@ const style = {
   p: 4,
 };
 
-export const MentorPage = () => {
+export const MentorOHPage = () => {
   window.scrollTo(0, 0);
   const [account, setAccount] = useRecoilState(accountState);
   const [courses, setCourses] = useState();
@@ -61,16 +62,10 @@ export const MentorPage = () => {
         <div className="flex justify-between mb-5 pb-14 items-center">
           <div className="text-xl font-light">Instructor Dashboard</div>
           <div className="flex">
-            <Link
-              to={`/MentorOrderHistoryPage/${account?.sub}`}
-              className="p-2 text-buttonBlue bg-white rounded-2xl hover:text-white hover:bg-buttonBlue mr-10"
-            >
+            <Link to={`/MentorOrderHistoryPage/${account?.sub}`} className="p-2 text-buttonBlue bg-white rounded-2xl hover:text-white hover:bg-buttonBlue mr-10">
               Order history
             </Link>
-            <Link
-              to={"/MentorPage"}
-              className="p-2 text-buttonBlue bg-white rounded-2xl hover:text-white hover:bg-buttonBlue mr-10"
-            >
+            <Link to={"/MentorPage"} className="p-2 text-buttonBlue bg-white rounded-2xl hover:text-white hover:bg-buttonBlue mr-10">
               Courses
             </Link>
             <button
@@ -106,20 +101,11 @@ export const MentorPage = () => {
       <div className=" py-10 px-20 flex">
         <div className="w-1/4">
           Total Revenue
-          <div>
-            $
-            {staticIns.reduce((accumulator, currentValue) => {
-              return accumulator + currentValue.totalRevenue;
-            }, 0)}
-          </div>
+          <div>${staticIns.reduce((accumulator, currentValue)=>{return accumulator+currentValue.totalRevenue},0)}</div>
         </div>
         <div className="w-1/4">
           Total Student
-          <div>
-            {staticIns.reduce((accumulator, currentValue) => {
-              return accumulator + currentValue.totalStudent;
-            }, 0)}
-          </div>
+          <div>{staticIns.reduce((accumulator, currentValue)=>{return accumulator+currentValue.totalStudent},0)}</div>
         </div>
         <div className="w-1/4">
           Total Order
@@ -135,63 +121,8 @@ export const MentorPage = () => {
         <button className="p-2 bg-grey500">Search</button>
       </div> */}
 
-      <div className="px-40 mt-20">
-        {courses?.map((course) => (
-          <div
-            key={course.id}
-            className="flex mb-10 p-5 border border-grey500 justify-between"
-          >
-            <img className="w-1/4 mr-10" src={course.img} />
-            <div className="w-2/4 mr-10 flex flex-col justify-between">
-              <div className="text-2xl font-semibold">{course.title}</div>
-              <div className="text-sm">
-                {course.category.name} - {course.price}$
-              </div>
-              <div className="font-thin mb-5">
-                Students:{" "}
-                {staticIns.find((st) => st.course_id == course.id)
-                  ?.totalStudent ?? 0}
-              </div>
-              <div className="text-right">{course.createdDate}</div>
-            </div>
-            <div className="self-center">
-              <button
-                onClick={() => {
-                  setEditCourse(course);
-                  handleOpen();
-                }}
-                className="block mb-3 p-2 bg-buttonBlue text-white rounded-xl"
-              >
-                Edit
-              </button>
-
-              <button
-                onClick={async () => {
-                  const getLesssions = await api.getCourseDetails(course.id);
-                  setEditLession(getLesssions);
-                  setEditCourse(course);
-                  handleOpenL();
-                }}
-                className="block mb-3 p-2 bg-buttonBlue text-white rounded-xl"
-              >
-                Detail
-              </button>
-
-              <button
-                onClick={async () => {
-                  await api.delCourse(course.id, account.token);
-                  const getCourses = await api.getCourseByInstructor(
-                    account?.sub
-                  );
-                  setCourses(getCourses);
-                }}
-                className="block mb-3 p-2 bg-red text-white rounded-xl"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
+      <div className="px-40 mt-10">
+        <MentorOrderHistory />
       </div>
 
       <Modal

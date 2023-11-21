@@ -186,6 +186,26 @@ export const getCourseByInstructor = async (username) => {
   }
 };
 
+export const getOrderCourseByInstructor = async (username) => {
+  {
+    const res = await axios.get(
+      `http://localhost:8080/ordercourses/history/instructor/${username}`
+    );
+    console.log(res);
+    return res.data;
+  }
+};
+
+export const getStaticByInstructor = async (username) => {
+  {
+    const res = await axios.get(
+      `http://localhost:8080/ordercourses/static/${username}`
+    );
+    console.log(res);
+    return res.data;
+  }
+};
+
 export const postProfileImage = async (formData, username) => {
   const res = await axios.post(
     `http://localhost:8080/users/upload/image/${username}`,
@@ -398,6 +418,8 @@ export const api = {
   getAllUser, 
   getMonthlyOrderCourse,
   getMonthlyOrderTool,
+  getOrderCourseByInstructor,
+  getStaticByInstructor,
   
   postPayment,
   postComment,
